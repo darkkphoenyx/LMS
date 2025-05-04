@@ -124,7 +124,7 @@
 }
 
 .button2 {
-  @apply cursor-pointer bg-gray-500 active:translate-y-0.5 transition-all;
+  @apply cursor-pointer bg-black active:translate-y-0.5 transition-all;
 }
 
 .button3 {

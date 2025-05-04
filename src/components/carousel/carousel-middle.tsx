@@ -28,13 +28,7 @@ const books = [
   },
 ];
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { Button } from "../ui/button";
 
 export function CaroselMiddle() {
@@ -66,9 +60,9 @@ export function CaroselMiddle() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CarouselContent className="">
+      <CarouselContent>
         {books.map((book, index) => (
-          <CarouselItem key={index} className="">
+          <CarouselItem key={index}>
             <div className="relative w-full h-[500px] ">
               <div
                 className="absolute inset-0 bg-cover bg-center "
@@ -91,8 +85,6 @@ export function CaroselMiddle() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10" />
-      <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10" />
     </Carousel>
   );
 }

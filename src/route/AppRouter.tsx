@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import Homepage from "../Pages/home/homepage";
+import Homepage from "../pages/home/homepage"; 
 import { ROUTES } from "../const/routes.const";
-import NotFoundPage from "../Pages/not-found-page";
+import NotFoundPage from "../pages/not-found-page";
 
 const AppRouter = () => {
   return (

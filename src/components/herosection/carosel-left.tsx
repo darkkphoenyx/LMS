@@ -15,7 +15,7 @@ const books = [
   },
   {
     imageUrl:
-      "https://m.media-amazon.com/images/I/71awKYpDjML._AC_UF1000,1000_QL80_.jpg",
+      "https://www.curiosasociety.com/cdn/shop/products/HPBoxSet_Soft_Front.jpg?v=1571439832",
     name: "Harry Potter Series (1-7 Bundle)",
     edition: "Special Edition",
     author: "J.K. Rowling",
@@ -32,7 +32,7 @@ const books = [
     author: "Sun Tzu",
     price: 10.0,
     genre: "Philosophy",
-    availableQuantity: 100,
+    availableQuantity: 80,
     soldUnit: 200000,
   },
   {
@@ -122,6 +122,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { Slider } from "../../components/ui/slider";
 
 export function CaroselLeft() {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -156,8 +157,8 @@ export function CaroselLeft() {
         {books.map((book, index) => (
           <CarouselItem key={index} className="basis-full">
             <div className="p-1 h-full">
-              <Card className="h-full w-full">
-                <CardContent className="flex flex-col items-center justify-center p-4 space-y-4">
+              <Card className="h-full w-full flex flex-col">
+                <CardContent className="flex flex-col items-center justify-between p-4 space-y-4 flex-grow">
                   <img
                     src={book.imageUrl}
                     alt={book.name}
@@ -187,6 +188,12 @@ export function CaroselLeft() {
                       <p>Available: {book.availableQuantity}</p>
                     </div>
                   </div>
+                  <Slider
+                    defaultValue={[100 - book.availableQuantity]}
+                    max={100}
+                    step={0}
+                    className="mt-auto w-full"
+                  />
                 </CardContent>
               </Card>
             </div>

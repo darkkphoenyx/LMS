@@ -1,10 +1,13 @@
-import { CaroselLeft } from "./carosel-left";
+import { CaroselLeft } from "./carousel-left";
+import { CaroselMiddle } from "./carousel-middle";
 
 const HeroSection = () => {
   return (
-    <div className="flex bg-yellow-400 w-full px-12 gap-12">
-      <div className="bg-blue-400 w-full">div 1</div>
-      <div className="bg-green-400 w-full">div 2</div>
+    <div className="flex  w-full px-12 gap-6">
+      <div className="bg-blue-400 w-1/2">div 1</div>
+      <div className="bg-green-900 w-[700px] min-h-max ">
+        <CaroselMiddle />
+      </div>
       <div>
         <CaroselLeft />
       </div>

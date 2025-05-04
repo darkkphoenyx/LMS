@@ -122,7 +122,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { Slider } from "../../components/ui/slider";
+import { Slider } from "../ui/slider";
 
 export function CaroselLeft() {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -157,7 +157,7 @@ export function CaroselLeft() {
         {books.map((book, index) => (
           <CarouselItem key={index} className="basis-full">
             <div className="p-1 h-full">
-              <Card className="h-full w-full flex flex-col">
+              <Card className="h-full w-full flex flex-col rounded-none">
                 <CardContent className="flex flex-col items-center justify-between p-4 space-y-4 flex-grow">
                   <img
                     src={book.imageUrl}
@@ -200,8 +200,8 @@ export function CaroselLeft() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className="absolute left-2 top-36 -translate-y-1/2 z-10" />
+      <CarouselNext className="absolute right-2 top-36 -translate-y-1/2 z-10" />
     </Carousel>
   );
 }

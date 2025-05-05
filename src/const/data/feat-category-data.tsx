@@ -5,7 +5,7 @@ import { FaStethoscope } from "react-icons/fa6";
 import { IoIosPaper } from "react-icons/io";
 import { FaRunning } from "react-icons/fa";
 import { FaSnowman } from "react-icons/fa";
-import { FeaturedCategory } from "../intefaces/FeaturedCategories";
+import { FeaturedCategory } from "../../intefaces/FeaturedCategories";
 
 export const FeaturedCategoriesCarouselData: FeaturedCategory[] = [
   {

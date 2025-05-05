@@ -1,4 +1,4 @@
-import { Books } from "../intefaces/Books";
+import { Books } from "../../intefaces/Books";
 
 export const booksData: Books[] = [
   {

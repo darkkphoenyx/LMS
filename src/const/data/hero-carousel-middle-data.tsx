@@ -1,4 +1,4 @@
-import { HeroCarouselMiddle } from "../intefaces/HeroCarouselMiddle";
+import { HeroCarouselMiddle } from "../../intefaces/HeroCarouselMiddle";
 
 export const HeroCarouselMiddleData: HeroCarouselMiddle[] = [
   {

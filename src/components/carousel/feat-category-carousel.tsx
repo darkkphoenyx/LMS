@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../components/ui/carousel";
-import { FeaturedCategoriesCarouselData } from "../../const/feat-category-data";
+import { FeaturedCategoriesCarouselData } from "../../const/data/feat-category-data";
 import FeaturedCategoryCard from "../cards/feat-category-card";
 
 const FeaturedCategoriesCarousel: React.FC = () => {

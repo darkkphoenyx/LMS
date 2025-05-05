@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 import { Slider } from "../ui/slider";
-import { booksData } from "../../const/books-data";
+import { booksData } from "../../const/data/books-data";
 
 export function CaroselLeft() {
   const [isHovered, setIsHovered] = React.useState(false);

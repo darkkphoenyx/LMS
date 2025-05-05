@@ -3,7 +3,7 @@ import Autoplay from "embla-carousel-autoplay";
 
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { Button } from "../ui/button";
-import { HeroCarouselMiddleData } from "../../const/hero-carousel-middle-data";
+import { HeroCarouselMiddleData } from "../../const/data/hero-carousel-middle-data";
 
 export function CaroselMiddle() {
   const [isHovered, setIsHovered] = React.useState(false);

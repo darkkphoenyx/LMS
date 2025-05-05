@@ -1,4 +1,4 @@
-import { booksData } from "../../const/books-data";
+import { booksData } from "../../const/data/books-data";
 import { Card, CardContent } from "../ui/card";
 import {
   Carousel,

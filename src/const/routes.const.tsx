@@ -4,4 +4,7 @@ export const ROUTES = {
     DASHBOARD: "/dashboard",
     NOT_FOUND: "*",
   },
+  USER: {
+    ABOUT: "/about",
+  },
 };

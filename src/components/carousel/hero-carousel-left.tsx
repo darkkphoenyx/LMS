@@ -1,7 +1,6 @@
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 
-import { Card, CardContent } from "../ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -9,8 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { Slider } from "../ui/slider";
 import { booksData } from "../../const/data/books-data";
+import HeroLeftCard from "../cards/hero-left-card";
 
 export function CaroselLeft() {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -42,51 +41,36 @@ export function CaroselLeft() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CarouselContent>
-        {booksData.map((book, index) => (
-          <CarouselItem key={index} className="basis-full">
-            <div className="p-1 h-full">
-              <Card className="h-full w-full flex flex-col rounded-none">
-                <CardContent className="flex flex-col items-center justify-between p-4 space-y-4 flex-grow">
-                  <img
-                    src={book.imageUrl}
-                    alt={book.name}
-                    className="w-32 h-48 object-cover rounded"
-                  />
-                  <div className="space-y-1 w-full">
-                    <p className="text-red-500 font-medium uppercase text-sm">
-                      {book.edition}
-                    </p>
-                    <h3 className="text-2xl font-bold">{book.name}</h3>
-                    <p className="text-sm text-gray-600 font-semibold">
-                      {book.author}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <p className="text-2xl font-bold text-green-600">
-                        ${book.price.toFixed(2)}
-                      </p>
-                      <p className="text-sm text-gray-700 font-semibold">
-                        <span className="text-blue-500 font-medium mr-1">
-                          Genre:
-                        </span>
-                        {book.genre}
-                      </p>
-                    </div>
-                    <div className="flex justify-between items-center mt-2 font-semibold">
-                      <p>Copies Sold: {book.soldUnit}</p>
-                      <p>Available: {book.availableQuantity}</p>
-                    </div>
-                  </div>
-                  <Slider
-                    defaultValue={[100 - book.availableQuantity]}
-                    max={100}
-                    step={0}
-                    className="mt-auto w-full"
-                  />
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
+        {booksData.map(
+          (
+            {
+              author,
+              availableQuantity,
+              edition,
+              genre,
+              imageUrl,
+              name,
+              price,
+              soldUnit,
+            },
+            index
+          ) => (
+            <CarouselItem key={index} className="basis-full">
+              <div className="p-1 h-full">
+                <HeroLeftCard
+                  imageUrl={imageUrl}
+                  author={author}
+                  availableQuantity={availableQuantity}
+                  edition={edition}
+                  genre={genre}
+                  name={name}
+                  price={price}
+                  soldUnit={soldUnit}
+                />
+              </div>
+            </CarouselItem>
+          )
+        )}
       </CarouselContent>
       <CarouselPrevious className="absolute left-2 top-36 -translate-y-1/2 z-10" />
       <CarouselNext className="absolute right-2 top-36 -translate-y-1/2 z-10" />

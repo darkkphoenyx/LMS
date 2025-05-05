@@ -85,8 +85,8 @@ const AboutPage = () => {
           <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-8">
             {[
               {
-                name: "Dipesh Sunuwar",
-                image: "./src/assets/dipesh.jpg",
+                name: "Deepesh Sunuwar",
+                image: "./src/assets/deepesh.jpg",
                 role: "Library Director",
               },
               {

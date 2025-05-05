@@ -13,8 +13,8 @@ const CardComponent: React.FC<FeatCard> = ({
       className="pl-12 items-start text-white gap-2 rounded-none w-full relative h-[310px] pt-9 shadow-sm hover:scale-102 transition-all"
       style={{ backgroundColor: color }}
     >
-      <h2 className="text-3xl font-medium">{heading1}</h2>
-      <p className="text-3xl">{heading2}</p>
+      <h2 className="text-2xl md:text-3xl font-medium">{heading1}</h2>
+      <p className="text-2xl md:text-3xl">{heading2}</p>
       <Button
         style={{
           color: color,
@@ -24,7 +24,7 @@ const CardComponent: React.FC<FeatCard> = ({
         Shop Now
       </Button>
       <img
-        className="h-56 absolute right-20 bottom-10"
+        className="h-40 md:h-48 absolute right-10 bottom-10 shadow-sm"
         src={imgUrl}
         alt={heading1}
       />

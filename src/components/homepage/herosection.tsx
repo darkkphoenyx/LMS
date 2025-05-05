@@ -1,10 +1,10 @@
-import { CaroselLeft } from "../carousel/hero-carousel-left";
+import CaroselLeft from "../carousel/hero-carousel-left";
 import { CaroselMiddle } from "../carousel/hero-carousel-middle";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-wrap w-full gap-6">
-      <div className="w-[80%] min-h-max ">
+    <div className="flex w-full gap-6 flex-wrap lg:flex-nowrap items-center justify-center">
+      <div className="w-full md:w-[73%] min-h-max ">
         <CaroselMiddle />
       </div>
       <div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { Link } from 'react-router-dom';
 
-export default function ShopPage() {
+export default function BooksPage() {
     const booksData = [
         {
             id: 1,
@@ -384,7 +384,7 @@ export default function ShopPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {filteredbooksData.slice(0, visibleItems).map((book, index) => (
                         <Link to={`/book-details/${encodeURIComponent(book.name)}`} className="text-sm text-blue-500">
-                            <div key={index} className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+                            <div key={index} className="border rounded-lg p-4 h-full flex flex-col justify-between shadow hover:shadow-lg transition">
                                 <img src={book.imageUrl} alt={book.name} className="w-full h-60 object-contain mb-4 rounded" />
                                 <h2 className="text-lg font-semibold">{book.name}</h2>
                                 <p className="text-sm text-gray-600">Author: {book.author}</p>

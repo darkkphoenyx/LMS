@@ -1,4 +1,3 @@
-import { Slider } from "@radix-ui/react-slider";
 import { Card, CardContent } from "../ui/card";
 import { Books } from "../../intefaces/Books";
 
@@ -40,12 +39,12 @@ const HeroLeftCard: React.FC<Books> = ({
             <p>Available: {availableQuantity}</p>
           </div>
         </div>
-        <Slider
-          defaultValue={[100 - availableQuantity]}
-          max={100}
-          step={0}
-          className="mt-auto w-full"
-        />
+        <div className="w-full h-3 bg-red-100 rounded-2xl overflow-hidden">
+          <div
+            className="h-3 bg-red-500 rounded-2xl transition-all duration-300"
+            style={{ width: `${100 - availableQuantity}%` }}
+          ></div>
+        </div>
       </CardContent>
     </Card>
   );

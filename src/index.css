@@ -120,7 +120,7 @@
 }
 
 .button1 {
-  @apply cursor-pointer bg-red-500 active:translate-y-0.5 transition-all;
+  @apply cursor-pointer text-lg rounded-sm bg-indigo-600 active:translate-y-0.5 transition-all;
 }
 
 .button2 {
@@ -132,9 +132,9 @@
 }
 
 .button4 {
-  @apply cursor-pointer active:translate-y-0.5 transition-all text-lg bg-white;
+  @apply cursor-pointer active:translate-y-0.5 transition-all md:text-lg bg-white;
 }
 
 .header1 {
-  @apply text-4xl font-bold mb-6;
+  @apply text-3xl text-center px-1 md:px-0 md:text-start md:text-4xl font-bold mb-6 text-indigo-900;
 }

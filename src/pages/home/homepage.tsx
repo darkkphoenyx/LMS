@@ -6,10 +6,11 @@ import CategoryBanner from "../../components/homepage/category-banner";
 const Homepage = () => {
   return (
     <div className="space-y-20">
-      <div className="px-12">
+      <div className="max-w-7xl mx-auto">
         <HeroSection />
       </div>
-      <div className="px-12 my-20">
+      {/* most popular for food and drinks books */}
+      <div className="my-20 max-w-7xl mx-auto ">
         <CategoryBanner
           heading1="Most Popular For Food and Drinks books"
           boxHeading1="Discount On"
@@ -19,10 +20,12 @@ const Homepage = () => {
           boxImageUrl="https://images.unsplash.com/photo-1454117096348-e4abbeba002c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z3JheSUyMHBhdHRlcm58ZW58MHx8MHx8fDA%3D"
         />
       </div>
-      <div className="bg-[#ffefe4] px-12">
+
+      <div className="bg-[#ffefe4] ">
         <FeaturedCategories />
       </div>
-      <div className="px-12 my-20">
+      {/* biographies category */}
+      <div className=" my-20 max-w-7xl mx-auto">
         <CategoryBanner
           heading1="Biographies Books"
           boxHeading1="All Biographies"

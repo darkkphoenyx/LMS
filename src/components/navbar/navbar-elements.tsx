@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { cn } from "../../lib/utils";
 import {
@@ -45,56 +45,59 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ];
 
-const components2: { title: string; href: string; description: string }[] = [
-  {
-    title: "Buy",
-    href: "/shop/buy",
-    description: "Buy the latest and greatest books.",
-  },
-  {
-    title: "Borrow",
-    href: "/shop/borrow",
-    description: "Borrow the latest and greatest books of all time.",
-  },
-];
-
 const NavElements = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 200);
+  };
+
+  const isActive = (path: string): string => {
+    return location.pathname === path
+      ? "text-indigo-600 border-b-3 border-indigo-600 rounded-none transition-all"
+      : "text-black";
+  };
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link to="/">
-            <NavigationMenuLink className="font-medium text-lg">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/")}`}
+              onClick={() => handleNavigation("/")}
+            >
               Home
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <Link to="/about">
-            <NavigationMenuLink className="font-medium text-lg">
-              About
+          <Link to="/books">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/books")}`}
+              onClick={() => handleNavigation("/books")}
+            >
+              Books
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="font-medium text-lg">
-            Shop
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components2.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
+          <Link to="/about">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/about")}`}
+              onClick={() => handleNavigation("/about")}
+            >
+              About
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
@@ -108,6 +111,8 @@ const NavElements = () => {
                   key={component.title}
                   title={component.title}
                   href={component.href}
+                  onClick={() => handleNavigation(component.href)}
+                  className={`${isActive(component.href)}`}
                 >
                   {component.description}
                 </ListItem>
@@ -115,16 +120,13 @@ const NavElements = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link to="/blogs">
-            <NavigationMenuLink className="font-medium text-lg">
-              Blogs
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+
         <NavigationMenuItem>
           <Link to="/contact">
-            <NavigationMenuLink className="font-medium text-lg">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/contact")}`}
+              onClick={() => handleNavigation("/contact")}
+            >
               Contact Us
             </NavigationMenuLink>
           </Link>

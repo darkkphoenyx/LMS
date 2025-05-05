@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import XIcon from '@mui/icons-material/X';
@@ -16,29 +16,26 @@ const ContactPage = () => {
         message: ''
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
-        ...prevState,
-        [name]: value
+            ...prevState,
+            [name]: value
         }));
     };
-
-    const handleSubmit = (e) => {
+    
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Here you would typically send the form data to your backend
         console.log('Form submitted:', formData);
         alert('Thank you for your message! We will get back to you soon.');
-        // Reset form
         setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
+            name: '',
+            email: '',
+            phone: '',
+            subject: '',
+            message: ''
         });
     };
-
     return (
         <div className="bg-gray-50 min-h-screen">
 
@@ -261,7 +258,7 @@ const ContactPage = () => {
                 </div>
                 
                 <div className="bg-gray-300 h-96 rounded-lg shadow-md overflow-hidden">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1348.7898111344791!2d85.34437339824531!3d27.71206955437495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1970a9ff7041%3A0xfcaa45db29104458!2sTexas%20International%20College!5e0!3m2!1sen!2snp!4v1746432450385!5m2!1sen!2snp" width="100%" height="100%" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1348.7898111344791!2d85.34437339824531!3d27.71206955437495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1970a9ff7041%3A0xfcaa45db29104458!2sTexas%20International%20College!5e0!3m2!1sen!2snp!4v1746432450385!5m2!1sen!2snp" width="100%" height="100%" loading="lazy"></iframe>
                     <div className="w-full h-full flex items-center justify-center text-gray-600 text-lg">
                         Map Placeholder - Library Location at Chabahill, Kathmandu
                     </div>

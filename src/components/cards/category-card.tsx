@@ -10,7 +10,7 @@ const CategoryCard: React.FC<Books> = ({
   price,
 }) => {
   return (
-    <Card className="rounded-none w-[200px] h-full">
+    <Card className="rounded-none w-[200px] h-full hover:scale-103 transition-all">
       <CardContent className="flex flex-col justify-between p-2 space-y-2 h-full">
         <img
           src={imageUrl}

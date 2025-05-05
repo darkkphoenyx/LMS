@@ -18,7 +18,7 @@ const FeaturedCategoryCard: React.FC<FeaturedCategory> = ({
             stroke: strokeColor,
           }}
         />
-        <span className="mt-2 text-xl font-bold text-center">{name}</span>
+        <span className="mt-2 md:text-xl font-bold text-center">{name}</span>
       </CardContent>
     </Card>
   );

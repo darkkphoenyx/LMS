@@ -11,7 +11,11 @@ import {
 import { booksData } from "../../const/data/books-data";
 import HeroLeftCard from "../cards/hero-left-card";
 
-export function CaroselLeft() {
+interface CaroselLeftType {
+  category?: string;
+}
+
+const CaroselLeft: React.FC<CaroselLeftType> = ({ category }) => {
   const [isHovered, setIsHovered] = React.useState(false);
   const plugin = React.useRef(Autoplay({ delay: 3000 }));
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -41,16 +45,21 @@ export function CaroselLeft() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CarouselContent>
-        {booksData.slice(0, 10).map((book, index) => (
-          <CarouselItem key={index} className="basis-full">
-            <div className="p-1 h-full">
-              <HeroLeftCard {...book} />
-            </div>
-          </CarouselItem>
-        ))}
+        {booksData
+          .filter((book) => (category ? book.genre === category : true))
+          .slice(0, 10)
+          .map((book, index) => (
+            <CarouselItem key={index} className="basis-full">
+              <div className="p-1 h-full">
+                <HeroLeftCard {...book} />
+              </div>
+            </CarouselItem>
+          ))}
       </CarouselContent>
       <CarouselPrevious className="absolute left-2 top-36 -translate-y-1/2 z-10" />
       <CarouselNext className="absolute right-2 top-36 -translate-y-1/2 z-10" />
     </Carousel>
   );
-}
+};
+
+export default CaroselLeft;

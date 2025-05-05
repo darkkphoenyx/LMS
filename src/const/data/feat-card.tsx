@@ -3,7 +3,7 @@ import { FeatCard } from "../../intefaces/FeatCard";
 export const cardsData: FeatCard[] = [
   {
     heading1: "Coloring Books",
-    heading2: "for adults",
+    heading2: "for children",
     color: "#fd5c63",
     imgUrl:
       "https://raketcontent.com/1/Colorful_Modern_Drawing_and_Coloring_Kids_Book_Cover_0416be4e7b.png",

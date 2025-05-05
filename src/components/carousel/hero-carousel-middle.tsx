@@ -2,8 +2,8 @@ import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import { Button } from "../ui/button";
 import { HeroCarouselMiddleData } from "../../const/data/hero-carousel-middle-data";
+import HeroMiddleCard from "../cards/hero-middle-card";
 
 export function CaroselMiddle() {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -37,25 +37,7 @@ export function CaroselMiddle() {
       <CarouselContent>
         {HeroCarouselMiddleData.map((data, index) => (
           <CarouselItem key={index}>
-            <div className="relative w-full h-[500px] ">
-              <div
-                className="absolute inset-0 bg-cover bg-center "
-                style={{ backgroundImage: `url(${data.imageUrl})` }}
-              ></div>
-
-              <div className="absolute inset-0 bg-black opacity-50 "></div>
-
-              <div className="relative ml-16 z-10 gap-4 flex flex-col items-start justify-center text-white h-full ">
-                <h2 className="uppercase text-white font-semibold">
-                  Only this week
-                </h2>
-                <h2 className="text-white text-6xl ">
-                  {data.heading1}
-                  <span className="font-bold">{data.heading2}</span>
-                </h2>
-                <Button className="button3">Shop Now</Button>
-              </div>
-            </div>
+            <HeroMiddleCard {...data} />
           </CarouselItem>
         ))}
       </CarouselContent>

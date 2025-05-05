@@ -3,7 +3,7 @@ const AboutPage = () => {
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
       <header
-        style={{ backgroundImage: "assets/aboutbg.jpg" }}
+        style={{ backgroundImage: "url('/assets/aboutbg.jpg')" }}
         className="relative  bg-cover bg-center w-full"
       >
         {/* Overlay */}

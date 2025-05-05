@@ -42,7 +42,7 @@ const ContactPage = () => {
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
       <header
-        style={{ backgroundImage: "assets/contactbg.jpg" }}
+        style={{ backgroundImage: "url('/assets/contactbg.jpg')" }}
         className="relative bg-cover bg-center w-full"
       >
         <div className="absolute inset-0 bg-indigo-900/60"></div>

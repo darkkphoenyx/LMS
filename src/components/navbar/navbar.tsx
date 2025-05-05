@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavElements from "./navbar-elements";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCross } from "react-icons/im";
-import { FaSearch } from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { useState } from "react";
@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <>
       <div className="sticky top-0 z-50 bg-white">
-        <div className="py-8 max-w-7xl mx-auto flex gap-12 px-4 md:px-2 justify-between md:justify-start">
+        <div className="py-8 max-w-7xl mx-auto flex gap-12 px-4 md:px-0 justify-between md:justify-start">
           <h2 className="text-3xl md:text-4xl font-bold cursor-pointer text-indigo-900">
             BookWorm
           </h2>
@@ -48,7 +48,7 @@ const Navbar = () => {
                 type="text"
                 placeholder="Search..."
               />
-              <FaSearch fontSize={24} color="#4f39f6" />
+              <IoSearchOutline fontSize={28} />
             </div>
             <div className="flex items-center gap-4">
               <FaHeart className="cursor-pointer text-gray-400" fontSize={28} />

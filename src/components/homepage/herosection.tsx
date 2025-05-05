@@ -1,9 +1,9 @@
-import { CaroselLeft } from "../carousel/carousel-left";
-import { CaroselMiddle } from "../carousel/carousel-middle";
+import { CaroselLeft } from "../carousel/hero-carousel-left";
+import { CaroselMiddle } from "../carousel/hero-carousel-middle";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-wrap w-full px-12 gap-6">
+    <div className="flex flex-wrap w-full gap-6">
       <div className="w-[80%] min-h-max ">
         <CaroselMiddle />
       </div>

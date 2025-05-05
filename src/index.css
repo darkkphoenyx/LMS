@@ -130,3 +130,11 @@
 .button3 {
   @apply mt-4 bg-white text-black text-xl px-6 py-6 rounded-sm hover:text-white hover:bg-transparent border hover:border-white active:translate-y-0.5 transition-all;
 }
+
+.button4 {
+  @apply cursor-pointer active:translate-y-0.5 transition-all text-lg bg-white;
+}
+
+.header1 {
+  @apply text-4xl font-bold mb-6;
+}

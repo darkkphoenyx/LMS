@@ -2,7 +2,7 @@ const AboutPage = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <header className="relative bg-[url('./src/assets/aboutbg.jpg')] bg-cover bg-center w-full">
+      <header className="relative bg-[url('./assets/aboutbg.jpg')] bg-cover bg-center w-full">
         {/* Overlay */}
         <div className="absolute inset-0 bg-indigo-900/60"></div>
 
@@ -86,17 +86,17 @@ const AboutPage = () => {
             {[
               {
                 name: "Deepesh Sunuwar",
-                image: "./src/assets/deepesh.jpg",
+                image: "./assets/deepesh.jpg",
                 role: "Library Director",
               },
               {
                 name: "Rohan Shrestha",
-                image: "./src/assets/rohan.jpg",
+                image: "./assets/rohan.jpg",
                 role: "Head Librarian",
               },
               {
                 name: "Suman Bisunkhe",
-                image: "./src/assets/suman.jpg",
+                image: "./assets/suman.jpg",
                 role: "Digital Resources Specialist",
               },
               // { name: 'John Doe',image:"", role: 'Children\'s Program Coordinator' }

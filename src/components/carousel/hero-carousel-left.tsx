@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 import { Slider } from "../ui/slider";
-import { books } from "../../const/books-data";
+import { booksData } from "../../const/books-data";
 
 export function CaroselLeft() {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -42,7 +42,7 @@ export function CaroselLeft() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CarouselContent>
-        {books.map((book, index) => (
+        {booksData.map((book, index) => (
           <CarouselItem key={index} className="basis-full">
             <div className="p-1 h-full">
               <Card className="h-full w-full flex flex-col rounded-none">

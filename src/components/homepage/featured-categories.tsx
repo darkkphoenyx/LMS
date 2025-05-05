@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 import { SlArrowRight } from "react-icons/sl";
-import { FeaturedCategoriesCarousel } from "../carousel/feat-category-carousel";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
+import FeaturedCategoriesCarousel from "../carousel/feat-category-carousel";
 
 const cards = [
   {
@@ -40,7 +40,8 @@ const FeaturedCategories = () => {
           </p>
         </Link>
       </div>
-      <div>
+      {/* middle categories is being renedered from this component */}
+      <div className="py-8">
         <FeaturedCategoriesCarousel />
       </div>
       <div className="flex w-full gap-4 mt-12 border-none">

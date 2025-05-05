@@ -1,35 +1,9 @@
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 
-const books = [
-  {
-    imageUrl:
-      "https://t3.ftcdn.net/jpg/07/13/74/96/360_F_713749661_Q7wTk8TyKsG9z9nsV7MM2QpRYALmnNZd.jpg",
-    heading1: "Big",
-    heading2: "Sales",
-  },
-  {
-    imageUrl:
-      "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Ym9vayUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D",
-    heading1: "Mega",
-    heading2: "Trials",
-  },
-  {
-    imageUrl:
-      "https://t4.ftcdn.net/jpg/02/10/91/07/360_F_210910762_Gxc4ZcJ5Jr2v9mo3GxoxLf0rEmk7RNYX.jpg",
-    heading1: "Banger",
-    heading2: "Collection",
-  },
-  {
-    imageUrl:
-      "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/book-themed-zoom-meeting-background-design-template-e8610c3150af35d95e98372166145b40_screen.jpg?ts=1698303195",
-    heading1: "Ultimate",
-    heading2: "Collection",
-  },
-];
-
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { Button } from "../ui/button";
+import { HeroCarouselMiddleData } from "../../const/hero-carousel-middle-data";
 
 export function CaroselMiddle() {
   const [isHovered, setIsHovered] = React.useState(false);
@@ -61,12 +35,12 @@ export function CaroselMiddle() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CarouselContent>
-        {books.map((book, index) => (
+        {HeroCarouselMiddleData.map((data, index) => (
           <CarouselItem key={index}>
             <div className="relative w-full h-[500px] ">
               <div
                 className="absolute inset-0 bg-cover bg-center "
-                style={{ backgroundImage: `url(${book.imageUrl})` }}
+                style={{ backgroundImage: `url(${data.imageUrl})` }}
               ></div>
 
               <div className="absolute inset-0 bg-black opacity-50 "></div>
@@ -76,8 +50,8 @@ export function CaroselMiddle() {
                   Only this week
                 </h2>
                 <h2 className="text-white text-6xl ">
-                  {book.heading1}{" "}
-                  <span className="font-bold">{book.heading2}</span>
+                  {data.heading1}
+                  <span className="font-bold">{data.heading2}</span>
                 </h2>
                 <Button className="button3">Shop Now</Button>
               </div>

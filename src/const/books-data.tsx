@@ -1,4 +1,6 @@
-export const books = [
+import { Books } from "../intefaces/Books";
+
+export const booksData: Books[] = [
   {
     imageUrl:
       "https://img.perlego.com/book-covers/598007/9780062416216_300_450.webp",

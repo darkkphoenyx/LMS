@@ -1,4 +1,4 @@
-import { books } from "../../const/books-data";
+import { booksData } from "../../const/books-data";
 import { Card, CardContent } from "../ui/card";
 import {
   Carousel,
@@ -12,7 +12,7 @@ export function MostPopularBooksCarousel() {
   return (
     <Carousel className="w-full">
       <CarouselContent className="ml-1 gap-x-0.5">
-        {books
+        {booksData
           .filter((book) => book.genre == "Food & Drinks")
           .map((book, index) => (
             <CarouselItem

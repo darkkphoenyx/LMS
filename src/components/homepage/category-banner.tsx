@@ -40,7 +40,7 @@ const CategoryBanner: React.FC<CategoryBannerInterface> = ({
         <div className="hidden md:flex md:flex-grow w-1/2 ">
           <CategoryBannerCarouselBanner category={category} />
         </div>
-        <div className="block md:hidden w-full ml-[10%] mt-16">
+        <div className="block md:hidden w-full ml-[7%] mt-16">
           <CaroselLeft category={category} />
         </div>
       </div>

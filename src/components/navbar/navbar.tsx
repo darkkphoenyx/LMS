@@ -64,6 +64,16 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
+
+              <li>
+                <Link
+                  to={"/shop"}
+                  className={`font-medium text-lg ${isActive("/books")}`}
+                  onClick={() => handleNavigation("/books")}
+                >
+                  Books
+                </Link>
+              </li>
               <li>
                 <Link
                   to={"/about"}
@@ -71,15 +81,6 @@ const Navbar = () => {
                   onClick={() => handleNavigation("/about")}
                 >
                   About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={"/shop"}
-                  className={`font-medium text-lg ${isActive("/shop")}`}
-                  onClick={() => handleNavigation("/shop")}
-                >
-                  Shop
                 </Link>
               </li>
               <li>

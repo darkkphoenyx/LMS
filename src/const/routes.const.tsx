@@ -4,7 +4,8 @@ export const ROUTES = {
     DASHBOARD: "/dashboard",
     NOT_FOUND: "*",
   },
-  USER: {
+  USER:{
     ABOUT: "/about",
-  },
+    CONTACT: "/contact",
+  }
 };

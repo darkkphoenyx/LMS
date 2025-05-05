@@ -2,7 +2,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavElements from "./navbar-elements";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCross } from "react-icons/im";
+import { FaSearch } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { IoMdCart } from "react-icons/io";
 import { useState } from "react";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -37,6 +41,23 @@ const Navbar = () => {
           <div className="hidden md:block">
             <NavElements />
           </div>
+          <div className="hidden lg:flex gap-10">
+            <div className="flex items-center justify-between border rounded-sm px-4 text-gray-400">
+              <input
+                className="outline-none p-2"
+                type="text"
+                placeholder="Search..."
+              />
+              <FaSearch fontSize={24} color="#4f39f6" />
+            </div>
+            <div className="flex items-center gap-4">
+              <FaHeart className="cursor-pointer text-gray-400" fontSize={28} />
+              <IoMdCart className="cursor-pointer" fontSize={30} />
+            </div>
+            <div className="flex items-center">
+              <Button className="button1">Login</Button>
+            </div>
+          </div>
           {!isMobile ? (
             <GiHamburgerMenu
               fontSize={36}
@@ -54,7 +75,7 @@ const Navbar = () => {
 
         {isMobile && (
           <div className="mobile px-4 pb-4">
-            <ul className="space-y-4">
+            <ul className="space-y-4 text-center">
               <li>
                 <Link
                   to={"/"}
@@ -101,6 +122,7 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
+              <Button className="button1">Login</Button>
             </ul>
           </div>
         )}

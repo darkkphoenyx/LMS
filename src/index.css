@@ -120,7 +120,7 @@
 }
 
 .button1 {
-  @apply cursor-pointer bg-red-500 active:translate-y-0.5 transition-all;
+  @apply cursor-pointer text-lg rounded-sm bg-indigo-600 active:translate-y-0.5 transition-all;
 }
 
 .button2 {

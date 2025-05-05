@@ -13,11 +13,11 @@ const CategoryBanner: React.FC<CategoryBannerInterface> = ({
   boxColor,
 }) => {
   return (
-    <div>
+    <div className="w-full">
       <h2 className="header1">{heading1}</h2>
       <div className="flex items-center w-full space-x-4">
         <div
-          className="w-[35%] bg-center bg-cover shadow-sm h-[300px]"
+          className="w-full bg-center bg-cover shadow-sm h-[300px]"
           style={{ backgroundImage: `url(${boxImageUrl})` }}
         >
           <Card className="bg-transparent rounded-none backdrop-blur-xs border-none h-full flex items-start justify-start p-12">
@@ -36,7 +36,7 @@ const CategoryBanner: React.FC<CategoryBannerInterface> = ({
             <Button className="button2 bg-black">{buttonValue}</Button>
           </Card>
         </div>
-        <div className="w-2/3">
+        <div className="flex-grow w-1/2">
           <CategoryBannerCarouselBanner category={category} />
         </div>
       </div>

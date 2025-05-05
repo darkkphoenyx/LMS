@@ -24,7 +24,7 @@ const CardComponent: React.FC<FeatCard> = ({
         Shop Now
       </Button>
       <img
-        className="h-56 absolute right-20 bottom-10"
+        className="h-48 absolute right-10 bottom-10"
         src={imgUrl}
         alt={heading1}
       />

@@ -8,7 +8,7 @@ const HeroMiddleCard: React.FC<HeroCarouselMiddle> = ({
   imageUrl,
 }) => {
   return (
-    <div className="relative w-full h-[500px] ">
+    <div className="relative w-full h-[500px]">
       <div
         className="absolute inset-0 bg-cover bg-center "
         style={{ backgroundImage: `url(${imageUrl})` }}

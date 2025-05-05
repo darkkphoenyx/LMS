@@ -3,8 +3,8 @@ import Homepage from "../pages/home/homepage";
 import { ROUTES } from "../const/routes.const";
 import NotFoundPage from "../pages/not-found-page";
 import Layout from "../layout";
-import AboutPage from "../pages/about/AboutPage";
-import ContactPage from "../pages/contact/ContactPage";
+import AboutPage from "../pages/about/about";
+import ContactPage from "../pages/contact/contact";
 
 const AppRouter = () => {
   return (

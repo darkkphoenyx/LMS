@@ -5,4 +5,6 @@ export interface CategoryBannerInterface {
   buttonValue: string;
   link?: string;
   category: string;
+  boxImageUrl: string;
+  boxColor?: string;
 }

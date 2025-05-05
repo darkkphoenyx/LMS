@@ -1,6 +1,7 @@
 import { Books } from "../../intefaces/Books";
 
 export const booksData: Books[] = [
+  // Hero section left carousel data
   {
     imageUrl:
       "https://img.perlego.com/book-covers/598007/9780062416216_300_450.webp",
@@ -111,6 +112,7 @@ export const booksData: Books[] = [
     availableQuantity: 25,
     soldUnit: 450000,
   },
+  // Food & Drinks
   {
     imageUrl: "https://images.penguinrandomhouse.com/cover/9780399582752",
     name: "Salt, Fat, Acid, Heat",
@@ -213,5 +215,112 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 30,
     soldUnit: 210000,
+  },
+  // Biographies
+  {
+    imageUrl: "https://m.media-amazon.com/images/I/81cJTmFpG-L.jpg",
+    name: "Becoming",
+    edition: "Paperback Edition",
+    author: "Michelle Obama",
+    price: 18.99,
+    genre: "Biographies",
+    availableQuantity: 40,
+    soldUnit: 500000,
+  },
+  {
+    imageUrl:
+      "https://booksmandala.com/_next/image?url=https%3A%2F%2Fbooks.bizmandala.com%2Fmedia%2Fbooks%2F9780349140438%2F9780349140438-3607.webp&w=3840&q=75",
+    name: "Steve Jobs",
+    edition: "Anniversary Edition",
+    author: "Walter Isaacson",
+    price: 14.99,
+    genre: "Biographies",
+    availableQuantity: 50,
+    soldUnit: 800000,
+  },
+  {
+    imageUrl:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1560816565i/48855.jpg",
+    name: "The Diary of a Young Girl",
+    edition: "50th Anniversary Edition",
+    author: "Anne Frank",
+    price: 12.99,
+    genre: "Biographies",
+    availableQuantity: 60,
+    soldUnit: 1200000,
+  },
+  {
+    imageUrl:
+      "https://booksmandala.com/_next/image?url=https%3A%2F%2Fbooks.bizmandala.com%2Fmedia%2Fbooks%2F9780099511021%2F9780099511021-2779.webp&w=3840&q=75",
+    name: "Educated",
+    edition: "Hardcover Edition",
+    author: "Tara Westover",
+    price: 22.99,
+    genre: "Biographies",
+    availableQuantity: 70,
+    soldUnit: 700000,
+  },
+  {
+    imageUrl: "https://media.thuprai.com/products/When_Breath_Becomes_Air.jpg",
+    name: "When Breath Becomes Air",
+    edition: "Hardcover Edition",
+    author: "Paul Kalanithi",
+    price: 16.99,
+    genre: "Biographies",
+    availableQuantity: 45,
+    soldUnit: 350000,
+  },
+  {
+    imageUrl:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1523542886i/7445.jpg",
+    name: "The Glass Castle",
+    edition: "Paperback Edition",
+    author: "Jeannette Walls",
+    price: 11.99,
+    genre: "Biographies",
+    availableQuantity: 50,
+    soldUnit: 900000,
+  },
+  {
+    imageUrl:
+      "https://media.thuprai.com/__sized__/products/9781471150388-thumbnail-280x405-70.jpg",
+    name: "The Wright Brothers",
+    edition: "Hardcover Edition",
+    author: "David McCullough",
+    price: 19.99,
+    genre: "Biographies",
+    availableQuantity: 40,
+    soldUnit: 450000,
+  },
+  {
+    imageUrl: "https://m.media-amazon.com/images/I/81coyP8S-ZL.jpg",
+    name: "The Immortal Life of Henrietta Lacks",
+    edition: "Paperback Edition",
+    author: "Rebecca Skloot",
+    price: 14.99,
+    genre: "Biographies",
+    availableQuantity: 35,
+    soldUnit: 1000000,
+  },
+  {
+    imageUrl: "https://media.thuprai.com/front_covers/dare-to-lead.jpg",
+    name: "Dare to Lead",
+    edition: "Hardcover Edition",
+    author: "Brené Brown",
+    price: 24.99,
+    genre: "Biographies",
+    availableQuantity: 30,
+    soldUnit: 450000,
+  },
+  {
+    imageUrl:
+      "https://booksmandala.com/_next/image?url=https%3A%2F%2Fbooks.bizmandala.com%2Fmedia%2Fbooks%2F9780062641540%2F9780062641540-9434.webp&w=3840&q=75",
+    name: "The Subtle Art of Not Giving a F*ck",
+    edition: "Updated Edition",
+    author: "Mark Manson",
+    price: 18.99,
+    genre: "Biographies",
+    availableQuantity: 25,
+    soldUnit: 300000,
   },
 ];

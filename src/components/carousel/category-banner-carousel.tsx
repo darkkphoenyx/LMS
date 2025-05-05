@@ -34,7 +34,7 @@ const CategoryBannerCarouselBanner: React.FC<CategoryBannerCarousel> = ({
                       alt={name}
                       className="w-24 h-32 object-cover rounded self-center"
                     />
-                    <div className="w-full ml-8">
+                    <div className="w-full pl-2">
                       <p className="text-red-500 font-medium uppercase text-[12px]">
                         {edition}
                       </p>

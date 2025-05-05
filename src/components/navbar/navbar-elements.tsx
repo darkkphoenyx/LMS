@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { cn } from "../../lib/utils";
 import {
@@ -59,12 +59,33 @@ const components2: { title: string; href: string; description: string }[] = [
 ];
 
 const NavElements = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 200);
+  };
+
+  const isActive = (path: string): string => {
+    return location.pathname === path
+      ? "text-indigo-600 border-b-3 border-indigo-600 rounded-none transition-all"
+      : "text-black";
+  };
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link to="/">
-            <NavigationMenuLink className="font-medium text-lg">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/")}`}
+              onClick={() => handleNavigation("/")}
+            >
               Home
             </NavigationMenuLink>
           </Link>
@@ -72,7 +93,10 @@ const NavElements = () => {
 
         <NavigationMenuItem>
           <Link to="/about">
-            <NavigationMenuLink className="font-medium text-lg">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/about")}`}
+              onClick={() => handleNavigation("/about")}
+            >
               About
             </NavigationMenuLink>
           </Link>
@@ -89,6 +113,8 @@ const NavElements = () => {
                   key={component.title}
                   title={component.title}
                   href={component.href}
+                  onClick={() => handleNavigation(component.href)}
+                  className={`${isActive(component.href)}`}
                 >
                   {component.description}
                 </ListItem>
@@ -108,6 +134,8 @@ const NavElements = () => {
                   key={component.title}
                   title={component.title}
                   href={component.href}
+                  onClick={() => handleNavigation(component.href)}
+                  className={`${isActive(component.href)}`}
                 >
                   {component.description}
                 </ListItem>
@@ -117,14 +145,20 @@ const NavElements = () => {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link to="/blogs">
-            <NavigationMenuLink className="font-medium text-lg">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/blogs")}`}
+              onClick={() => handleNavigation("/blogs")}
+            >
               Blogs
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link to="/contact">
-            <NavigationMenuLink className="font-medium text-lg">
+            <NavigationMenuLink
+              className={`font-medium text-lg ${isActive("/contact")}`}
+              onClick={() => handleNavigation("/contact")}
+            >
               Contact Us
             </NavigationMenuLink>
           </Link>

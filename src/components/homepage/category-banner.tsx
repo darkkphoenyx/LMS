@@ -2,6 +2,7 @@ import { Button } from "../ui/button";
 import { Card, CardDescription, CardTitle } from "../ui/card";
 import CategoryBannerCarouselBanner from "../carousel/category-banner-carousel";
 import { CategoryBannerInterface } from "../../intefaces/CategoryBanner";
+import CaroselLeft from "../carousel/hero-carousel-left";
 
 const CategoryBanner: React.FC<CategoryBannerInterface> = ({
   heading1,
@@ -15,9 +16,9 @@ const CategoryBanner: React.FC<CategoryBannerInterface> = ({
   return (
     <div className="w-full">
       <h2 className="header1">{heading1}</h2>
-      <div className="flex items-center w-full space-x-4">
+      <div className="flex items-center w-full space-x-4 flex-wrap md:flex-nowrap justify-center">
         <div
-          className="w-full bg-center bg-cover shadow-sm h-[300px]"
+          className="w-full bg-center bg-cover shadow-sm h-[300px] mx-4 md:mx-0"
           style={{ backgroundImage: `url(${boxImageUrl})` }}
         >
           <Card className="bg-transparent rounded-none backdrop-blur-xs border-none h-full flex items-start justify-start p-12">
@@ -36,8 +37,11 @@ const CategoryBanner: React.FC<CategoryBannerInterface> = ({
             <Button className="button2 bg-black">{buttonValue}</Button>
           </Card>
         </div>
-        <div className="flex-grow w-1/2">
+        <div className="hidden md:flex md:flex-grow w-1/2 ">
           <CategoryBannerCarouselBanner category={category} />
+        </div>
+        <div className="block md:hidden w-full ml-[10%] mt-16">
+          <CaroselLeft category={category} />
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ const AboutPage = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <header className="relative bg-[url('./assets/aboutbg.jpg')] bg-cover bg-center w-full">
+      <header className="relative bg-[url('assets/aboutbg.jpg')] bg-cover bg-center w-full">
         {/* Overlay */}
         <div className="absolute inset-0 bg-indigo-900/60"></div>
 

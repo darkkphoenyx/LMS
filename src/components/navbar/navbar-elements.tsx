@@ -79,7 +79,7 @@ const NavElements = () => {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <Link to="/about">
+          <Link to="/books">
             <NavigationMenuLink
               className={`font-medium text-lg ${isActive("/books")}`}
               onClick={() => handleNavigation("/books")}

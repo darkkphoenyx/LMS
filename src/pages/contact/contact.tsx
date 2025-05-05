@@ -41,7 +41,7 @@ const ContactPage = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <header className="relative bg-[url('./assets/contactbg.jpg')] bg-cover bg-center w-full">
+      <header className="relative bg-[url('assets/contactbg.jpg')] bg-cover bg-center w-full">
         <div className="absolute inset-0 bg-indigo-900/60"></div>
         <div className="relative max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">

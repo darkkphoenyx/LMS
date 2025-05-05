@@ -20,7 +20,7 @@ const HeroMiddleCard: React.FC<HeroCarouselMiddle> = ({
         <h2 className="uppercase text-white font-semibold">Only this week</h2>
         <h2 className="text-white text-6xl ">
           {heading1}
-          <span className="font-bold">{heading2}</span>
+          <span className="font-bold ml-4">{heading2}</span>
         </h2>
         <Button className="button3">Shop Now</Button>
       </div>

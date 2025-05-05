@@ -41,7 +41,7 @@ export function CaroselLeft() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CarouselContent>
-        {booksData.map((book, index) => (
+        {booksData.slice(0, 10).map((book, index) => (
           <CarouselItem key={index} className="basis-full">
             <div className="p-1 h-full">
               <HeroLeftCard {...book} />

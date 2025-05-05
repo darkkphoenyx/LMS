@@ -41,36 +41,13 @@ export function CaroselLeft() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CarouselContent>
-        {booksData.map(
-          (
-            {
-              author,
-              availableQuantity,
-              edition,
-              genre,
-              imageUrl,
-              name,
-              price,
-              soldUnit,
-            },
-            index
-          ) => (
-            <CarouselItem key={index} className="basis-full">
-              <div className="p-1 h-full">
-                <HeroLeftCard
-                  imageUrl={imageUrl}
-                  author={author}
-                  availableQuantity={availableQuantity}
-                  edition={edition}
-                  genre={genre}
-                  name={name}
-                  price={price}
-                  soldUnit={soldUnit}
-                />
-              </div>
-            </CarouselItem>
-          )
-        )}
+        {booksData.map((book, index) => (
+          <CarouselItem key={index} className="basis-full">
+            <div className="p-1 h-full">
+              <HeroLeftCard {...book} />
+            </div>
+          </CarouselItem>
+        ))}
       </CarouselContent>
       <CarouselPrevious className="absolute left-2 top-36 -translate-y-1/2 z-10" />
       <CarouselNext className="absolute right-2 top-36 -translate-y-1/2 z-10" />

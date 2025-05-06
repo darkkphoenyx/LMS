@@ -5,16 +5,12 @@ import {
   Calendar, 
   AlertCircle, 
   Clock, 
-  TrendingUp, 
-  BarChart2, 
-  PieChart, 
-  Activity as ActivityIcon,
+  TrendingUp,
+  Library,
   ArrowUp,
   ArrowDown,
   MoreHorizontal,
   BookOpen,
-  Library,
-  Bookmark,
   BookText
 } from 'lucide-react';
 import { 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Edit, Trash2, X, UserIcon, Mail, Calendar, Shield, CheckCircle2, XCircle } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, X, UserIcon, Calendar, Shield, CheckCircle2, XCircle } from 'lucide-react';
 import { db, type User } from '../../lib/db';
 
 // Add avatar URLs for dummy users

@@ -14,5 +14,4 @@ export const books: Omit<Book, 'id'>[] = [
     pages: 208,
     description: 'A novel about an Andalusian shepherd boy who dreams of finding a worldly treasure.'
   },
-  // ... rest of the books data ...
 ]; 

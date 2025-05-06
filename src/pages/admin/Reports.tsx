@@ -4,7 +4,7 @@ import {
   PieChart, Pie, Cell, LineChart, Line
 } from 'recharts';
 import { 
-  BookOpen, Users, Calendar, DollarSign, TrendingUp, Clock, AlertCircle 
+  BookOpen, Users, Calendar, DollarSign, TrendingUp, Clock, AlertCircle
 } from 'lucide-react';
 import { books, users, borrowings, fines } from '../../const/dummyData';
 

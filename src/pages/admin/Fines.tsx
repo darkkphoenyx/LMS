@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, DollarSign, AlertCircle, CheckCircle2, Plus, Edit, Trash2, X, ChevronRight } from 'lucide-react';
+import { Search, DollarSign, AlertCircle, CheckCircle2, Plus, Edit, Trash2, X } from 'lucide-react';
 import { db, type Fine, type User, type Borrowing } from '../../lib/db';
 
 // Add Fine Modal Component

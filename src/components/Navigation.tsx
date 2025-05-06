@@ -5,7 +5,6 @@ import {
   Users, 
   Calendar, 
   DollarSign, 
-  BarChart2, 
   Settings, 
   Bell, 
   Bookmark

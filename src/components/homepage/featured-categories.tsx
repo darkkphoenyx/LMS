@@ -9,7 +9,7 @@ const FeaturedCategories: React.FC = () => {
       {/* Header Section */}
       <div className="flex items-center justify-center md:justify-between flex-wrap md:flex-nowrap flex-col md:flex-row">
         <h2 className="header1">Featured Categories</h2>
-        <Link to={"/allCategories"}>
+        <Link to={"/books"}>
           <p className="text-red-500 gap-2 flex items-center">
             All Categories
             <SlArrowRight style={{ strokeWidth: 2 }} />

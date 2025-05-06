@@ -7,5 +7,7 @@ export const ROUTES = {
   USER:{
     ABOUT: "/about",
     CONTACT: "/contact",
+    BOOK: "/books",
+    BOOKDETAILS: "/book-details/:name"
   }
 };

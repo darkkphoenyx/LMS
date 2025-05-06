@@ -8,6 +8,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 import CategoryCard from "../cards/category-card";
+import { Link } from "react-router";
 
 interface CategoryBannerCarousel {
   category: string;
@@ -27,7 +28,9 @@ const CategoryBannerCarouselBanner: React.FC<CategoryBannerCarousel> = ({
               className="pl-1 sm:basis-1/2 md:basis-1/3"
             >
               <div className="p-1 h-full">
-                <CategoryCard {...book} />
+                <Link to={`/book-details/${encodeURIComponent(book.name)}`}>
+                  <CategoryCard {...book} />
+                </Link>
               </div>
             </CarouselItem>
           ))}

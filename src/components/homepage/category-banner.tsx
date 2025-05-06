@@ -3,6 +3,7 @@ import { Card, CardDescription, CardTitle } from "../ui/card";
 import CategoryBannerCarouselBanner from "../carousel/category-banner-carousel";
 import { CategoryBannerInterface } from "../../intefaces/CategoryBanner";
 import CaroselLeft from "../carousel/hero-carousel-left";
+import { Link } from "react-router";
 
 const CategoryBanner: React.FC<CategoryBannerInterface> = ({
   heading1,
@@ -34,7 +35,9 @@ const CategoryBanner: React.FC<CategoryBannerInterface> = ({
             >
               {boxHeading2}
             </CardDescription>
-            <Button className="button2 bg-black">{buttonValue}</Button>
+            <Link to={"/books"}>
+              <Button className="button2 bg-black">{buttonValue}</Button>
+            </Link>
           </Card>
         </div>
         <div className="hidden md:flex md:flex-grow w-1/2 ">

@@ -35,9 +35,11 @@ const Navbar = () => {
     <>
       <div className="sticky top-0 z-50 bg-white">
         <div className="py-8 max-w-7xl mx-auto flex gap-12 px-4 md:px-0 justify-between md:justify-start">
-          <h2 className="text-3xl md:text-4xl font-bold cursor-pointer text-indigo-900">
-            BookWorm
-          </h2>
+          <Link to={"/"} onClick={() => handleNavigation("/")}>
+            <h2 className="text-3xl md:text-4xl font-bold cursor-pointer text-indigo-900">
+              BookWorm
+            </h2>
+          </Link>
           <div className="hidden md:block">
             <NavElements />
           </div>
@@ -85,7 +87,6 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
-
               <li>
                 <Link
                   to={"/books"}
@@ -102,15 +103,6 @@ const Navbar = () => {
                   onClick={() => handleNavigation("/about")}
                 >
                   About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={"/categories"}
-                  className={`font-medium text-lg ${isActive("/categories")}`}
-                  onClick={() => handleNavigation("/categories")}
-                >
-                  Categories
                 </Link>
               </li>
               <li>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { HeroCarouselMiddle } from "../../intefaces/HeroCarouselMiddle";
+import { Link } from "react-router";
 
 const HeroMiddleCard: React.FC<HeroCarouselMiddle> = ({
   heading1,
@@ -22,7 +23,9 @@ const HeroMiddleCard: React.FC<HeroCarouselMiddle> = ({
           {heading1}
           <span className="font-bold md:ml-4">{heading2}</span>
         </h2>
-        <Button className="button3">Shop Now</Button>
+        <Link to={"/books"}>
+          <Button className="button3">Shop Now</Button>
+        </Link>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import {
 } from "../ui/carousel";
 import { booksData } from "../../const/data/books-data";
 import HeroLeftCard from "../cards/hero-left-card";
+import { Link } from "react-router";
 
 interface CaroselLeftType {
   category?: string;
@@ -51,7 +52,13 @@ const CaroselLeft: React.FC<CaroselLeftType> = ({ category }) => {
           .map((book, index) => (
             <CarouselItem key={index} className="basis-full">
               <div className="p-1 h-full">
-                <HeroLeftCard {...book} />
+                <Link
+                  to={`/book-details/${encodeURIComponent(book.name)}`}
+                  key={index}
+                  className="text-sm text-blue-500"
+                >
+                  <HeroLeftCard {...book} />
+                </Link>
               </div>
             </CarouselItem>
           ))}

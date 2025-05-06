@@ -14,33 +14,33 @@ import {
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Horror",
-    href: "/categories/horror",
+    href: "/horror",
     description: "Expreriences that evoke feelings of fear, dread, or terror.",
   },
   {
     title: "Comedy",
-    href: "/categories/comedy",
+    href: "/comedy",
     description: "Laugh out Loud experiences that entertain and amuse.",
   },
   {
     title: "Romance Comedy",
-    href: "/categories/romance-comedy",
+    href: "/romance-comedy",
     description:
       "Dive deep into the world of love and relationships with a touch of humor.",
   },
   {
     title: "Sci-Fi",
-    href: "/categories/sci-fi",
+    href: "/sci-fi",
     description: "Explore futuristic worlds and advanced technology.",
   },
   {
     title: "Adventure",
-    href: "/categories/adventure",
+    href: "/adventure",
     description: "Take a journey through thrilling quests and explorations.",
   },
   {
     title: "Fantasy",
-    href: "/categories/fantasy",
+    href: "/fantasy",
     description: "Wanna live out the fantasy, then do so.",
   },
 ];
@@ -110,8 +110,7 @@ const NavElements = () => {
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  href={component.href}
-                  onClick={() => handleNavigation(component.href)}
+                  onClick={() => handleNavigation("/books")}
                   className={`${isActive(component.href)}`}
                 >
                   {component.description}

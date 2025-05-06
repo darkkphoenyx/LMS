@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { FeatCard } from "../../intefaces/FeatCard";
 import { Button } from "../ui/button";
 import { Card as CardUI } from "../ui/card";
@@ -15,14 +16,16 @@ const CardComponent: React.FC<FeatCard> = ({
     >
       <h2 className="text-2xl md:text-3xl font-medium">{heading1}</h2>
       <p className="text-2xl md:text-3xl">{heading2}</p>
-      <Button
-        style={{
-          color: color,
-        }}
-        className="button4 mt-8"
-      >
-        Shop Now
-      </Button>
+      <Link to={"/books"}>
+        <Button
+          style={{
+            color: color,
+          }}
+          className="button4 mt-8"
+        >
+          Shop Now
+        </Button>
+      </Link>
       <img
         className="h-40 md:h-48 absolute right-10 bottom-10 shadow-sm"
         src={imgUrl}

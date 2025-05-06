@@ -226,11 +226,11 @@ const ContactPage = () => {
               <div>
                 <h4 className="font-bold text-indigo-900 mb-2">Email</h4>
                 <p className="text-gray-700">
-                  info@libraryhub.org
+                  info@BookWorm.org
                   <br />
-                  reference@libraryhub.org
+                  reference@BookWorm.org
                   <br />
-                  programs@libraryhub.org
+                  programs@BookWorm.org
                 </p>
               </div>
             </div>

@@ -12,7 +12,7 @@ const AboutPage = () => {
         {/* Content */}
         <div className="relative max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
-            About LibraryHub
+            About BookWorm
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-xl text-indigo-100">
             Your gateway to knowledge, exploration, and community resources
@@ -31,7 +31,7 @@ const AboutPage = () => {
         </div>
 
         <p className="text-lg text-gray-700 max-w-4xl mx-auto text-center">
-          LibraryHub began as a small community reading room in 2019 and has
+          BookWorm began as a small community reading room in 2019 and has
           since grown into a comprehensive information resource center serving
           over 5,000 community members. Our library is dedicated to fostering a
           love of reading, supporting educational pursuits, and providing access
@@ -129,7 +129,7 @@ const AboutPage = () => {
       <section className="py-16 px-4 bg-gradient-to-r from-indigo-900 to-indigo-700 text-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">
-            LibraryHub By The Numbers
+            BookWorm By The Numbers
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -184,7 +184,7 @@ const AboutPage = () => {
             {
               year: "2024",
               description:
-                "Launched the LibraryHub digital platform, bringing our services online.",
+                "Launched the BookWorm digital platform, bringing our services online.",
             },
             {
               year: "2025",

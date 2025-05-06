@@ -88,7 +88,7 @@ const Navbar = () => {
 
               <li>
                 <Link
-                  to={"/shop"}
+                  to={"/books"}
                   className={`font-medium text-lg ${isActive("/books")}`}
                   onClick={() => handleNavigation("/books")}
                 >

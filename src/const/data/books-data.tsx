@@ -12,6 +12,7 @@ export const booksData: Books[] = [
     genre: "Fiction",
     availableQuantity: 50,
     soldUnit: 150000,
+    rating: 4,
   },
   {
     imageUrl:
@@ -23,6 +24,7 @@ export const booksData: Books[] = [
     genre: "Fantasy",
     availableQuantity: 20,
     soldUnit: 500000,
+    rating: 3,
   },
   {
     imageUrl:
@@ -34,6 +36,7 @@ export const booksData: Books[] = [
     genre: "Philosophy",
     availableQuantity: 80,
     soldUnit: 200000,
+    rating: 4,
   },
   {
     imageUrl:
@@ -45,6 +48,7 @@ export const booksData: Books[] = [
     genre: "Dystopian",
     availableQuantity: 35,
     soldUnit: 300000,
+    rating: 4,
   },
   {
     imageUrl:
@@ -56,6 +60,7 @@ export const booksData: Books[] = [
     genre: "Classic",
     availableQuantity: 40,
     soldUnit: 250000,
+    rating: 3,
   },
   {
     imageUrl:
@@ -67,6 +72,7 @@ export const booksData: Books[] = [
     genre: "Classic",
     availableQuantity: 45,
     soldUnit: 230000,
+    rating: 3,
   },
   {
     imageUrl:
@@ -78,6 +84,7 @@ export const booksData: Books[] = [
     genre: "Self-help",
     availableQuantity: 60,
     soldUnit: 180000,
+    rating: 3,
   },
   {
     imageUrl:
@@ -89,6 +96,7 @@ export const booksData: Books[] = [
     genre: "History",
     availableQuantity: 30,
     soldUnit: 400000,
+    rating: 4,
   },
   {
     imageUrl:
@@ -100,6 +108,7 @@ export const booksData: Books[] = [
     genre: "Self-help",
     availableQuantity: 55,
     soldUnit: 350000,
+    rating: 4,
   },
   {
     imageUrl:
@@ -111,6 +120,7 @@ export const booksData: Books[] = [
     genre: "Fantasy",
     availableQuantity: 25,
     soldUnit: 450000,
+    rating: 3,
   },
   // Food & Drinks
   {
@@ -122,6 +132,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 30,
     soldUnit: 200000,
+    rating: 3,
   },
   {
     imageUrl: "https://m.media-amazon.com/images/I/515afUMn3aL.jpg",
@@ -132,6 +143,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 15,
     soldUnit: 300000,
+    rating: 3,
   },
   {
     imageUrl:
@@ -143,6 +155,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 40,
     soldUnit: 250000,
+    rating: 4,
   },
   {
     imageUrl: "https://images.penguinrandomhouse.com/cover/9781607747208",
@@ -153,6 +166,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 20,
     soldUnit: 150000,
+    rating: 5,
   },
   {
     imageUrl: "https://images.penguinrandomhouse.com/cover/9780399580949",
@@ -163,6 +177,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 25,
     soldUnit: 180000,
+    rating: 5,
   },
   {
     imageUrl:
@@ -174,6 +189,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 35,
     soldUnit: 220000,
+    rating: 3,
   },
   {
     imageUrl: "https://images.penguinrandomhouse.com/cover/9781607745259",
@@ -184,6 +200,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 18,
     soldUnit: 120000,
+    rating: 4,
   },
   {
     imageUrl: "https://images.penguinrandomhouse.com/cover/9780399578007",
@@ -194,6 +211,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 27,
     soldUnit: 160000,
+    rating: 4,
   },
   {
     imageUrl: "https://images.penguinrandomhouse.com/cover/9781607747307",
@@ -204,6 +222,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 22,
     soldUnit: 350000,
+    rating: 5,
   },
   {
     imageUrl:
@@ -215,6 +234,7 @@ export const booksData: Books[] = [
     genre: "Food & Drinks",
     availableQuantity: 30,
     soldUnit: 210000,
+    rating: 3,
   },
   // Biographies
   {
@@ -226,6 +246,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 40,
     soldUnit: 500000,
+    rating: 2,
   },
   {
     imageUrl:
@@ -237,6 +258,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 50,
     soldUnit: 800000,
+    rating: 5,
   },
   {
     imageUrl:
@@ -248,6 +270,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 60,
     soldUnit: 1200000,
+    rating: 4,
   },
   {
     imageUrl:
@@ -259,6 +282,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 70,
     soldUnit: 700000,
+    rating: 5,
   },
   {
     imageUrl: "https://media.thuprai.com/products/When_Breath_Becomes_Air.jpg",
@@ -269,6 +293,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 45,
     soldUnit: 350000,
+    rating: 3,
   },
   {
     imageUrl:
@@ -280,6 +305,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 50,
     soldUnit: 900000,
+    rating: 5,
   },
   {
     imageUrl:
@@ -291,6 +317,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 40,
     soldUnit: 450000,
+    rating: 3,
   },
   {
     imageUrl: "https://m.media-amazon.com/images/I/81coyP8S-ZL.jpg",
@@ -301,6 +328,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 35,
     soldUnit: 1000000,
+    rating: 5,
   },
   {
     imageUrl: "https://media.thuprai.com/front_covers/dare-to-lead.jpg",
@@ -311,6 +339,7 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 30,
     soldUnit: 450000,
+    rating: 4,
   },
   {
     imageUrl:
@@ -322,5 +351,6 @@ export const booksData: Books[] = [
     genre: "Biographies",
     availableQuantity: 25,
     soldUnit: 300000,
+    rating: 5,
   },
 ];

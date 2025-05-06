@@ -7,4 +7,5 @@ export interface Books {
   genre: string;
   availableQuantity: number;
   soldUnit: number;
+  rating: number;
 }

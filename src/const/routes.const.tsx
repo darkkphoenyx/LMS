@@ -4,10 +4,10 @@ export const ROUTES = {
     DASHBOARD: "/dashboard",
     NOT_FOUND: "*",
   },
-  USER:{
+  USER: {
     ABOUT: "/about",
     CONTACT: "/contact",
     BOOK: "/books",
-    BOOKDETAILS: "/book-details/:name"
-  }
+    BOOKDETAILS: "/book-details/:name",
+  },
 };

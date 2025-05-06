@@ -13,6 +13,7 @@ export interface Book {
   language: string;
   pages: number;
   description: string;
+  imageUrl?: string;
   lastBorrowed?: string;
   dueDate?: string;
 }
@@ -34,6 +35,7 @@ export interface User {
   role: 'admin' | 'teacher' | 'student';
   status: 'active' | 'inactive';
   joinDate: number;
+  imageUrl?: string;
 }
 
 export interface ProfileDetails {

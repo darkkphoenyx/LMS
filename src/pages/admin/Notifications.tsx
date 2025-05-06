@@ -5,30 +5,30 @@ import { db, type Notification } from '../../lib/db';
 // Helper Components
 const NotificationIcon = ({ type }: { type: Notification['type'] }) => {
   const colors = {
-    system: 'bg-blue-100 text-blue-600',
-    alert: 'bg-red-100 text-red-600',
-    user: 'bg-green-100 text-green-600'
+    system: 'bg-blue-50 text-blue-600',
+    alert: 'bg-red-50 text-red-600',
+    user: 'bg-green-50 text-green-600'
   };
 
   return (
-    <div className={`flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-full ${colors[type]}`}>
-      {type === 'system' ? <Bell className="w-5 h-5" /> :
-       type === 'alert' ? <AlertCircle className="w-5 h-5" /> :
-       <Mail className="w-5 h-5" />}
+    <div className={`flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-xl ${colors[type]}`}>
+      {type === 'system' ? <Bell className="w-6 h-6" /> :
+       type === 'alert' ? <AlertCircle className="w-6 h-6" /> :
+       <Mail className="w-6 h-6" />}
     </div>
   );
 };
 
 const PriorityBadge = ({ priority }: { priority: Notification['priority'] }) => {
   const colors = {
-    high: 'bg-red-100 text-red-800 border border-red-200',
-    medium: 'bg-yellow-100 text-yellow-800 border border-yellow-200',
-    low: 'bg-green-100 text-green-800 border border-green-200'
+    high: 'bg-red-50 text-red-700 border border-red-100',
+    medium: 'bg-yellow-50 text-yellow-700 border border-yellow-100',
+    low: 'bg-green-50 text-green-700 border border-green-100'
   };
 
   return (
-    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${colors[priority]}`}>
-      {priority}
+    <span className={`px-3 py-1.5 inline-flex text-xs font-medium rounded-lg ${colors[priority]}`}>
+      {priority.charAt(0).toUpperCase() + priority.slice(1)}
     </span>
   );
 };
@@ -94,21 +94,30 @@ function AddNotificationModal({ isOpen, onClose, onAddNotification }: AddNotific
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl pointer-events-auto border border-gray-200 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 w-full max-w-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Add New Notification</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <X className="w-6 h-6" />
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 bg-blue-50 rounded-lg">
+              <Bell className="w-4 h-4 text-blue-600" />
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900">Add New Notification</h2>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-all duration-200"
+          >
+            <X className="w-4 h-4" />
           </button>
         </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
               <select
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value as Notification['type'] })}
               >
@@ -121,7 +130,7 @@ function AddNotificationModal({ isOpen, onClose, onAddNotification }: AddNotific
               <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
               <select
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={formData.priority}
                 onChange={(e) => setFormData({ ...formData, priority: e.target.value as Notification['priority'] })}
               >
@@ -130,31 +139,38 @@ function AddNotificationModal({ isOpen, onClose, onAddNotification }: AddNotific
                 <option value="low">Low</option>
               </select>
             </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-              <input
-                type="text"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-              <textarea
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows={3}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              />
-            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+            <input
+              type="text"
+              required
+              className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              placeholder="Enter notification title"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+            <textarea
+              required
+              className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 resize-none"
+              rows={3}
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              placeholder="Enter notification message"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Action Label (Optional)</label>
               <input
                 type="text"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={formData.action?.label || ''}
                 onChange={(e) => {
                   const label = e.target.value;
@@ -164,13 +180,14 @@ function AddNotificationModal({ isOpen, onClose, onAddNotification }: AddNotific
                     action: label && url ? { label, url } : undefined 
                   });
                 }}
+                placeholder="e.g., View Details"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Action URL (Optional)</label>
               <input
                 type="text"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={formData.action?.url || ''}
                 onChange={(e) => {
                   const url = e.target.value;
@@ -180,22 +197,24 @@ function AddNotificationModal({ isOpen, onClose, onAddNotification }: AddNotific
                     action: label && url ? { label, url } : undefined 
                   });
                 }}
+                placeholder="e.g., /users/123"
               />
             </div>
           </div>
-          <div className="flex justify-end space-x-3">
+
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             >
-              Add Notification
+              Create Notification
             </button>
           </div>
         </form>
@@ -267,7 +286,7 @@ const FilterSection = ({
   <div className="flex items-center space-x-4">
     <div className="flex-1">
       <select
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
         value={filterType}
         onChange={(e) => onTypeChange(e.target.value)}
       >
@@ -279,7 +298,7 @@ const FilterSection = ({
     </div>
     <div className="flex-1">
       <select
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
         value={filterPriority}
         onChange={(e) => onPriorityChange(e.target.value)}
       >
@@ -291,7 +310,7 @@ const FilterSection = ({
     </div>
     <div className="flex-1">
       <select
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
         value={filterRead}
         onChange={(e) => onReadChange(e.target.value)}
       >
@@ -447,10 +466,14 @@ const Notifications = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center mb-4">
-        <div className="flex-1" />
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Notifications</h1>
+          <p className="mt-1 text-sm text-gray-500">Manage and track system notifications</p>
+        </div>
         <button 
-          className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 ml-auto"
+          className="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
           onClick={() => setIsAddModalOpen(true)}
         >
           <Plus className="w-5 h-5 mr-2" />
@@ -458,54 +481,90 @@ const Notifications = () => {
         </button>
       </div>
 
-      {/* Search and Filter Row */}
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex-1 max-w-sm">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search notifications..."
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+      {/* Search and Filter Section */}
+      <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <div className="w-full">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search notifications..."
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="md:col-span-3">
+            <FilterSection
+              filterType={filterType}
+              filterPriority={filterPriority}
+              filterRead={filterRead}
+              onTypeChange={(value) => setFilterType(value as any)}
+              onPriorityChange={(value) => setFilterPriority(value as any)}
+              onReadChange={(value) => setFilterRead(value as any)}
             />
           </div>
         </div>
-        <div className="flex items-center space-x-4">
-          <FilterSection
-            filterType={filterType}
-            filterPriority={filterPriority}
-            filterRead={filterRead}
-            onTypeChange={(value) => setFilterType(value as any)}
-            onPriorityChange={(value) => setFilterPriority(value as any)}
-            onReadChange={(value) => setFilterRead(value as any)}
-          />
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
-            {unreadCount} Unread
-          </span>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Notifications</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{notifications.length}</p>
+            </div>
+            <div className="p-3 bg-blue-50 rounded-xl">
+              <Bell className="w-6 h-6 text-blue-600" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Unread</p>
+              <p className="text-2xl font-bold text-red-600 mt-1">{unreadCount}</p>
+            </div>
+            <div className="p-3 bg-red-50 rounded-xl">
+              <AlertCircle className="w-6 h-6 text-red-600" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Read</p>
+              <p className="text-2xl font-bold text-green-600 mt-1">{notifications.length - unreadCount}</p>
+            </div>
+            <div className="p-3 bg-green-50 rounded-xl">
+              <CheckCircle2 className="w-6 h-6 text-green-600" />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Notifications Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      {/* Notifications List */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Notification
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Priority
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Time
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -515,7 +574,7 @@ const Notifications = () => {
                 <tr 
                   key={notification.id} 
                   className={`hover:bg-gray-50 transition-colors duration-150 ${
-                    notification.read ? 'bg-gray-50' : 'bg-white'
+                    notification.read ? 'bg-gray-50/50' : 'bg-white'
                   }`}
                 >
                   <td className="px-6 py-4">
@@ -576,8 +635,11 @@ const Notifications = () => {
               ))}
               {filteredNotifications.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-4 text-center text-sm text-gray-500">
-                    No notifications found
+                  <td colSpan={5} className="px-6 py-8 text-center text-sm text-gray-500 bg-gray-50/50">
+                    <div className="flex flex-col items-center">
+                      <Bell className="w-8 h-8 text-gray-400 mb-2" />
+                      <p>No notifications found</p>
+                    </div>
                   </td>
                 </tr>
               )}

@@ -9,281 +9,26 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
-  X
+  X,
+  Grid,
+  List,
+  Image as ImageIcon
 } from 'lucide-react';
 import { db, type Book } from '../../lib/db';
+import { books as initialBooks } from '../../const/books';
 
-// Initial book data
-const initialBooks: Omit<Book, 'id'>[] = [
-  {
-    title: 'The Great Gatsby',
-    author: 'F. Scott Fitzgerald',
-    isbn: '9780743273565',
-    category: 'Fiction',
-    status: 'available',
-    location: 'Shelf A1',
-    publishedYear: 1925,
-    publisher: 'Scribner',
-    language: 'English',
-    pages: 180,
-    description: 'A story of the fabulously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.'
-  },
-  {
-    title: 'To Kill a Mockingbird',
-    author: 'Harper Lee',
-    isbn: '9780446310789',
-    category: 'Fiction',
-    status: 'borrowed',
-    location: 'Shelf A2',
-    publishedYear: 1960,
-    publisher: 'Grand Central Publishing',
-    language: 'English',
-    pages: 281,
-    description: 'The story of racial injustice and the loss of innocence in the American South.',
-    lastBorrowed: '2024-03-15',
-    dueDate: '2024-04-15'
-  },
-  {
-    title: '1984',
-    author: 'George Orwell',
-    isbn: '9780451524935',
-    category: 'Science Fiction',
-    status: 'reserved',
-    location: 'Shelf B1',
-    publishedYear: 1949,
-    publisher: 'Signet Classic',
-    language: 'English',
-    pages: 328,
-    description: 'A dystopian social science fiction novel and cautionary tale.'
-  },
-  {
-    title: 'Pride and Prejudice',
-    author: 'Jane Austen',
-    isbn: '9780141439518',
-    category: 'Romance',
-    status: 'available',
-    location: 'Shelf B2',
-    publishedYear: 1813,
-    publisher: 'Penguin Classics',
-    language: 'English',
-    pages: 432,
-    description: 'A romantic novel of manners.'
-  },
-  {
-    title: 'The Catcher in the Rye',
-    author: 'J.D. Salinger',
-    isbn: '9780316769488',
-    category: 'Fiction',
-    status: 'maintenance',
-    location: 'Shelf C1',
-    publishedYear: 1951,
-    publisher: 'Little, Brown and Company',
-    language: 'English',
-    pages: 234,
-    description: 'A story about teenage alienation and loss of innocence.'
-  },
-  {
-    title: 'The Hobbit',
-    author: 'J.R.R. Tolkien',
-    isbn: '9780547928227',
-    category: 'Fantasy',
-    status: 'available',
-    location: 'Shelf C2',
-    publishedYear: 1937,
-    publisher: 'Houghton Mifflin Harcourt',
-    language: 'English',
-    pages: 310,
-    description: 'A fantasy novel about the quest of home-loving hobbit Bilbo Baggins.'
-  },
-  {
-    title: 'Brave New World',
-    author: 'Aldous Huxley',
-    isbn: '9780060850524',
-    category: 'Science Fiction',
-    status: 'borrowed',
-    location: 'Shelf D1',
-    publishedYear: 1932,
-    publisher: 'Harper Perennial',
-    language: 'English',
-    pages: 311,
-    description: 'A dystopian novel set in a futuristic World State.',
-    lastBorrowed: '2024-03-20',
-    dueDate: '2024-04-20'
-  },
-  {
-    title: 'The Lord of the Rings',
-    author: 'J.R.R. Tolkien',
-    isbn: '9780618640157',
-    category: 'Fantasy',
-    status: 'available',
-    location: 'Shelf D2',
-    publishedYear: 1954,
-    publisher: 'Houghton Mifflin',
-    language: 'English',
-    pages: 1178,
-    description: 'An epic high-fantasy novel.'
-  },
-  {
-    title: 'Crime and Punishment',
-    author: 'Fyodor Dostoevsky',
-    isbn: '9780143107637',
-    category: 'Classic',
-    status: 'reserved',
-    location: 'Shelf E1',
-    publishedYear: 1866,
-    publisher: 'Penguin Classics',
-    language: 'English',
-    pages: 671,
-    description: 'A psychological novel about a poor ex-student in St. Petersburg.'
-  },
-  {
-    title: 'The Alchemist',
-    author: 'Paulo Coelho',
-    isbn: '9780062315007',
-    category: 'Fiction',
-    status: 'available',
-    location: 'Shelf E2',
-    publishedYear: 1988,
-    publisher: 'HarperOne',
-    language: 'English',
-    pages: 208,
-    description: 'A novel about an Andalusian shepherd boy who dreams of finding a worldly treasure.'
-  },
-  {
-    title: 'The Art of War',
-    author: 'Sun Tzu',
-    isbn: '9781590302255',
-    category: 'Non-Fiction',
-    status: 'available',
-    location: 'Shelf F1',
-    publishedYear: -500,
-    publisher: 'Shambhala',
-    language: 'English',
-    pages: 273,
-    description: 'An ancient Chinese military treatise.'
-  },
-  {
-    title: 'The Diary of a Young Girl',
-    author: 'Anne Frank',
-    isbn: '9780553296983',
-    category: 'Biography',
-    status: 'borrowed',
-    location: 'Shelf F2',
-    publishedYear: 1947,
-    publisher: 'Bantam',
-    language: 'English',
-    pages: 283,
-    description: 'A diary written by Anne Frank while in hiding during the Nazi occupation.',
-    lastBorrowed: '2024-03-18',
-    dueDate: '2024-04-18'
-  },
-  {
-    title: 'The Hitchhiker\'s Guide to the Galaxy',
-    author: 'Douglas Adams',
-    isbn: '9780345391803',
-    category: 'Science Fiction',
-    status: 'available',
-    location: 'Shelf G1',
-    publishedYear: 1979,
-    publisher: 'Del Rey',
-    language: 'English',
-    pages: 224,
-    description: 'A comic science fiction series.'
-  },
-  {
-    title: 'The Kite Runner',
-    author: 'Khaled Hosseini',
-    isbn: '9781594631931',
-    category: 'Fiction',
-    status: 'reserved',
-    location: 'Shelf G2',
-    publishedYear: 2003,
-    publisher: 'Riverhead Books',
-    language: 'English',
-    pages: 371,
-    description: 'A story about the unlikely friendship between a wealthy boy and the son of his father\'s servant.'
-  },
-  {
-    title: 'The Da Vinci Code',
-    author: 'Dan Brown',
-    isbn: '9780307474278',
-    category: 'Mystery',
-    status: 'available',
-    location: 'Shelf H1',
-    publishedYear: 2003,
-    publisher: 'Anchor',
-    language: 'English',
-    pages: 489,
-    description: 'A mystery thriller novel.'
-  },
-  {
-    title: 'The Book Thief',
-    author: 'Markus Zusak',
-    isbn: '9780375842207',
-    category: 'Historical Fiction',
-    status: 'borrowed',
-    location: 'Shelf H2',
-    publishedYear: 2005,
-    publisher: 'Knopf Books for Young Readers',
-    language: 'English',
-    pages: 552,
-    description: 'A story about a young girl living in Nazi Germany.',
-    lastBorrowed: '2024-03-22',
-    dueDate: '2024-04-22'
-  },
-  {
-    title: 'The Road',
-    author: 'Cormac McCarthy',
-    isbn: '9780307387899',
-    category: 'Post-Apocalyptic',
-    status: 'available',
-    location: 'Shelf I1',
-    publishedYear: 2006,
-    publisher: 'Vintage',
-    language: 'English',
-    pages: 287,
-    description: 'A post-apocalyptic novel about a father and son\'s journey.'
-  },
-  {
-    title: 'The Girl with the Dragon Tattoo',
-    author: 'Stieg Larsson',
-    isbn: '9780307269751',
-    category: 'Mystery',
-    status: 'maintenance',
-    location: 'Shelf I2',
-    publishedYear: 2005,
-    publisher: 'Vintage Crime/Black Lizard',
-    language: 'English',
-    pages: 465,
-    description: 'A psychological thriller novel.'
-  },
-  {
-    title: 'The Hunger Games',
-    author: 'Suzanne Collins',
-    isbn: '9780439023481',
-    category: 'Science Fiction',
-    status: 'available',
-    location: 'Shelf J1',
-    publishedYear: 2008,
-    publisher: 'Scholastic Press',
-    language: 'English',
-    pages: 374,
-    description: 'A dystopian novel set in Panem.'
-  },
-  {
-    title: 'The Silent Patient',
-    author: 'Alex Michaelides',
-    isbn: '9781250301697',
-    category: 'Psychological Thriller',
-    status: 'reserved',
-    location: 'Shelf J2',
-    publishedYear: 2019,
-    publisher: 'Celadon Books',
-    language: 'English',
-    pages: 323,
-    description: 'A psychological thriller about a woman who shoots her husband and then stops speaking.'
-  }
-];
+const BOOK_CATEGORIES = [
+  'Fiction',
+  'Science Fiction',
+  'Fantasy',
+  'Romance',
+  'Mystery',
+  'Non-Fiction',
+  'Biography',
+  'Classic',
+  'Historical Fiction',
+  'Psychological Thriller'
+] as const;
 
 interface AddBookModalProps {
   isOpen: boolean;
@@ -296,179 +41,251 @@ function AddBookModal({ isOpen, onClose, onAddBook }: AddBookModalProps) {
     title: '',
     author: '',
     isbn: '',
-    category: 'Fiction',
+    category: 'fiction',
     status: 'available',
     location: '',
     publishedYear: new Date().getFullYear(),
     publisher: '',
     language: 'English',
     pages: 0,
-    description: ''
+    description: '',
+    imageUrl: ''
   });
+
+  const [previewImage, setPreviewImage] = useState<string>('');
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+        setFormData({ ...formData, imageUrl: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onAddBook(formData);
-    setFormData({
-      title: '',
-      author: '',
-      isbn: '',
-      category: 'Fiction',
-      status: 'available',
-      location: '',
-      publishedYear: new Date().getFullYear(),
-      publisher: '',
-      language: 'English',
-      pages: 0,
-      description: ''
-    });
     onClose();
   };
 
   if (!isOpen) return null;
 
-  // Height of navbar (e.g., 4rem = 64px)
-  const overlayStyle = { top: '4rem', height: 'calc(100vh - 4rem)' };
-
   return (
-    <>
-      {/* Overlay for mobile and tablet */}
-      <div className="fixed left-0 right-0 bg-black bg-opacity-75 lg:hidden z-40" style={overlayStyle} />
-      
-      {/* Overlay for desktop (excluding sidebar area) */}
-      <div className="hidden lg:block fixed right-0 bg-black bg-opacity-75 z-40" style={{ ...overlayStyle, left: '16rem' }} />
-      
-      {/* Modal content */}
-      <div className="fixed left-0 right-0 flex items-center justify-center lg:pl-64 z-50" style={overlayStyle}>
-        <div className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-2xl">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Add New Book</h2>
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-              <X className="w-6 h-6" />
-            </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="bg-white rounded-2xl p-5 w-full max-w-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 bg-blue-50 rounded-lg">
+              <BookIcon className="w-4 h-4 text-blue-600" />
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900">Add New Book</h2>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Author</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.author}
-                  onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.isbn}
-                  onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                >
-                  <option value="Fiction">Fiction</option>
-                  <option value="Science Fiction">Science Fiction</option>
-                  <option value="Fantasy">Fantasy</option>
-                  <option value="Romance">Romance</option>
-                  <option value="Mystery">Mystery</option>
-                  <option value="Non-Fiction">Non-Fiction</option>
-                  <option value="Biography">Biography</option>
-                  <option value="Classic">Classic</option>
-                  <option value="Historical Fiction">Historical Fiction</option>
-                  <option value="Psychological Thriller">Psychological Thriller</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Publisher</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.publisher}
-                  onChange={(e) => setFormData({ ...formData, publisher: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Published Year</label>
-                <input
-                  type="number"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.publishedYear}
-                  onChange={(e) => setFormData({ ...formData, publishedYear: parseInt(e.target.value) })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Pages</label>
-                <input
-                  type="number"
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.pages}
-                  onChange={(e) => setFormData({ ...formData, pages: parseInt(e.target.value) })}
-                />
+          <button 
+            onClick={onClose} 
+            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-all duration-200"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-12 gap-4">
+            {/* Book Cover Section */}
+            <div className="col-span-3">
+              <div className="aspect-[2/3] bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 flex flex-col items-center justify-center p-2 hover:border-blue-500 transition-all duration-200 cursor-pointer relative group">
+                {previewImage ? (
+                  <>
+                    <img
+                      src={previewImage}
+                      alt="Book cover preview"
+                      className="w-full h-full object-contain rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPreviewImage('');
+                        setFormData({ ...formData, imageUrl: '' });
+                      }}
+                      className="absolute top-1.5 right-1.5 p-1 bg-red-500 text-white rounded opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <ImageIcon className="w-8 h-8 text-gray-300 mb-1" />
+                    <span className="text-xs text-gray-500 text-center">Click to upload cover</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                  </>
+                )}
               </div>
             </div>
+
+            {/* Book Details Section */}
+            <div className="col-span-9">
+              <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-              <textarea
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows={3}
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  <label htmlFor="title" className="block text-xs font-medium text-gray-700 mb-1">Title</label>
+              <input
+                type="text"
+                    id="title"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-              >
-                Add Book
-              </button>
+            <div>
+                  <label htmlFor="author" className="block text-xs font-medium text-gray-700 mb-1">Author</label>
+              <input
+                type="text"
+                    id="author"
+                value={formData.author}
+                onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+              />
             </div>
-          </form>
-        </div>
+            <div>
+                  <label htmlFor="isbn" className="block text-xs font-medium text-gray-700 mb-1">ISBN</label>
+              <input
+                type="text"
+                    id="isbn"
+                value={formData.isbn}
+                onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+              />
+            </div>
+            <div>
+                  <label htmlFor="category" className="block text-xs font-medium text-gray-700 mb-1">Category</label>
+              <select
+                    id="category"
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    {BOOK_CATEGORIES.map((category) => (
+                      <option key={category} value={category.toLowerCase()}>
+                        {category}
+                      </option>
+                    ))}
+              </select>
+            </div>
+            <div>
+                  <label htmlFor="status" className="block text-xs font-medium text-gray-700 mb-1">Status</label>
+                  <select
+                    id="status"
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value as Book['status'] })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+                  >
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                    <option value="reserved">Reserved</option>
+                    <option value="maintenance">Maintenance</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="location" className="block text-xs font-medium text-gray-700 mb-1">Location</label>
+              <input
+                type="text"
+                    id="location"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+              />
+            </div>
+            <div>
+                  <label htmlFor="publisher" className="block text-xs font-medium text-gray-700 mb-1">Publisher</label>
+              <input
+                type="text"
+                    id="publisher"
+                value={formData.publisher}
+                onChange={(e) => setFormData({ ...formData, publisher: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+              />
+            </div>
+            <div>
+                  <label htmlFor="publishedYear" className="block text-xs font-medium text-gray-700 mb-1">Published Year</label>
+              <input
+                type="number"
+                    id="publishedYear"
+                value={formData.publishedYear}
+                onChange={(e) => setFormData({ ...formData, publishedYear: parseInt(e.target.value) })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+              />
+            </div>
+            <div>
+                  <label htmlFor="language" className="block text-xs font-medium text-gray-700 mb-1">Language</label>
+              <input
+                    type="text"
+                    id="language"
+                    value={formData.language}
+                    onChange={(e) => setFormData({ ...formData, language: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="pages" className="block text-xs font-medium text-gray-700 mb-1">Pages</label>
+                  <input
+                    type="number"
+                    id="pages"
+                value={formData.pages}
+                onChange={(e) => setFormData({ ...formData, pages: parseInt(e.target.value) })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+              />
+            </div>
+          </div>
+
+              <div className="mt-3">
+                <label htmlFor="description" className="block text-xs font-medium text-gray-700 mb-1">Description</label>
+            <textarea
+                  id="description"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  rows={2}
+                  className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
+                  required
+            />
+          </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-200"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-200"
+            >
+              Add Book
+            </button>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -491,133 +308,223 @@ function EditBookModal({ isOpen, onClose, book, onEditBook }: EditBookModalProps
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData) {
     onEditBook(formData);
     onClose();
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-2xl pointer-events-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="bg-white rounded-2xl p-5 w-full max-w-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Edit Book</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <X className="w-6 h-6" />
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 bg-blue-50 rounded-lg">
+              <Edit className="w-4 h-4 text-blue-600" />
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900">Edit Book</h2>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-all duration-200"
+          >
+            <X className="w-4 h-4" />
           </button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-12 gap-4">
+            {/* Book Cover Section */}
+            <div className="col-span-3">
+              <div className="aspect-[2/3] bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 flex flex-col items-center justify-center p-2 hover:border-blue-500 transition-all duration-200 cursor-pointer relative group">
+                {formData.imageUrl ? (
+                  <>
+                    <img
+                      src={formData.imageUrl}
+                      alt="Book cover preview"
+                      className="w-full h-full object-contain rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, imageUrl: '' })}
+                      className="absolute top-1.5 right-1.5 p-1 bg-red-500 text-white rounded opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <ImageIcon className="w-8 h-8 text-gray-300 mb-1" />
+                    <span className="text-xs text-gray-500 text-center">Click to upload cover</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setFormData({ ...formData, imageUrl: reader.result as string });
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Book Details Section */}
+            <div className="col-span-9">
+              <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                  <label htmlFor="edit-title" className="block text-xs font-medium text-gray-700 mb-1">Title</label>
               <input
                 type="text"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="edit-title"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Author</label>
+                  <label htmlFor="edit-author" className="block text-xs font-medium text-gray-700 mb-1">Author</label>
               <input
                 type="text"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="edit-author"
                 value={formData.author}
                 onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
+                  <label htmlFor="edit-isbn" className="block text-xs font-medium text-gray-700 mb-1">ISBN</label>
               <input
                 type="text"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="edit-isbn"
                 value={formData.isbn}
                 onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                  <label htmlFor="edit-category" className="block text-xs font-medium text-gray-700 mb-1">Category</label>
               <select
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="edit-category"
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              >
-                <option value="Fiction">Fiction</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Fantasy">Fantasy</option>
-                <option value="Romance">Romance</option>
-                <option value="Mystery">Mystery</option>
-                <option value="Non-Fiction">Non-Fiction</option>
-                <option value="Biography">Biography</option>
-                <option value="Classic">Classic</option>
-                <option value="Historical Fiction">Historical Fiction</option>
-                <option value="Psychological Thriller">Psychological Thriller</option>
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    {BOOK_CATEGORIES.map((category) => (
+                      <option key={category} value={category.toLowerCase()}>
+                        {category}
+                      </option>
+                    ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                  <label htmlFor="edit-status" className="block text-xs font-medium text-gray-700 mb-1">Status</label>
+                  <select
+                    id="edit-status"
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value as Book['status'] })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
+                  >
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                    <option value="reserved">Reserved</option>
+                    <option value="maintenance">Maintenance</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="edit-location" className="block text-xs font-medium text-gray-700 mb-1">Location</label>
               <input
                 type="text"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="edit-location"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Publisher</label>
+                  <label htmlFor="edit-publisher" className="block text-xs font-medium text-gray-700 mb-1">Publisher</label>
               <input
                 type="text"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="edit-publisher"
                 value={formData.publisher}
                 onChange={(e) => setFormData({ ...formData, publisher: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Published Year</label>
+                  <label htmlFor="edit-publishedYear" className="block text-xs font-medium text-gray-700 mb-1">Published Year</label>
               <input
                 type="number"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="edit-publishedYear"
                 value={formData.publishedYear}
                 onChange={(e) => setFormData({ ...formData, publishedYear: parseInt(e.target.value) })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Pages</label>
+                  <label htmlFor="edit-language" className="block text-xs font-medium text-gray-700 mb-1">Language</label>
               <input
-                type="number"
+                    type="text"
+                    id="edit-language"
+                    value={formData.language}
+                    onChange={(e) => setFormData({ ...formData, language: e.target.value })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="edit-pages" className="block text-xs font-medium text-gray-700 mb-1">Pages</label>
+                  <input
+                    type="number"
+                    id="edit-pages"
                 value={formData.pages}
                 onChange={(e) => setFormData({ ...formData, pages: parseInt(e.target.value) })}
+                    className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    required
               />
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+
+              <div className="mt-3">
+                <label htmlFor="edit-description" className="block text-xs font-medium text-gray-700 mb-1">Description</label>
             <textarea
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows={3}
+                  id="edit-description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  rows={2}
+                  className="w-full px-2.5 py-1.5 text-sm rounded-lg border border-gray-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
+                  required
             />
           </div>
-          <div className="flex justify-end space-x-3">
+            </div>
+          </div>
+
+          <div className="flex justify-end space-x-2 pt-3 border-t border-gray-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-200"
             >
               Save Changes
             </button>
@@ -636,15 +543,13 @@ export function Books() {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // Sorting state
   const [sortField, setSortField] = useState<'title' | 'author' | 'category' | 'status' | 'publishedYear'>('title');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-  // Add edit modal state
   const [editBookId, setEditBookId] = useState<string | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  // Add state for delete modal
   const [deleteBookId, setDeleteBookId] = useState<string | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   useEffect(() => {
     seedDatabase();
@@ -655,10 +560,10 @@ export function Books() {
     try {
       const count = await db.books.count();
       if (count === 0) {
-        // Add initial books with unique IDs
-        const booksWithIds = initialBooks.map((book, index) => ({
+        // Add books with unique IDs and required fields
+        const booksWithIds: Book[] = initialBooks.map((book: Omit<Book, 'id'>, index: number) => ({
           ...book,
-          id: (index + 1).toString()
+          id: (index + 1).toString(),
         }));
         
         await db.books.bulkAdd(booksWithIds);
@@ -814,6 +719,47 @@ export function Books() {
     }
   };
 
+  const getBookCoverUrl = (book: Book) => {
+    // Map of book titles to their image URLs
+    const bookCoverUrls: { [key: string]: string } = {
+      'The Alchemist': 'https://img.perlego.com/book-covers/598007/9780062416216_300_450.webp',
+      'Harry Potter Series (1-7 Bundle)': 'https://www.curiosasociety.com/cdn/shop/products/HPBoxSet_Soft_Front.jpg?v=1571439832',
+      'The Art of War': 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1630683326i/10534.jpg',
+      '1984': 'https://archive.org/services/img/george-orwell-1984_202309/full/pct:200/0/default.jpg',
+      'To Kill a Mockingbird': 'https://grey.com.np/cdn/shop/products/book-cover-To-Kill-a-Mockingbird-many-1961.webp?v=1669894816',
+      'The Great Gatsby': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/The_Great_Gatsby_Cover_1925_Retouched.jpg/960px-The_Great_Gatsby_Cover_1925_Retouched.jpg',
+      'Think and Grow Rich': 'https://media.thuprai.com/__sized__/front_covers/think-and-grow-rich-f.jpg-thumbnail-280x405-70.jpg',
+      'Sapiens: A Brief History of Humankind': 'https://media.thuprai.com/products/Sapiens__A_Brief_History_of_Humankind.jpg',
+      'The Subtle Art of Not Giving a F*ck': 'https://booksmandala.com/_next/image?url=https%3A%2F%2Fbooks.bizmandala.com%2Fmedia%2Fbooks%2F9780062641540%2F9780062641540-9434.webp&w=3840&q=75',
+      'The Hobbit': 'https://img1.od-cdn.com/ImageType-400/0293-1/%7BC9B54C84-0369-49C5-A0B3-98E3353A2129%7DIMG400.JPG',
+      'Salt, Fat, Acid, Heat': 'https://images.penguinrandomhouse.com/cover/9780399582752',
+      'The Food Lab': 'https://m.media-amazon.com/images/I/515afUMn3aL.jpg',
+      'How to Cook Everything': 'https://m.media-amazon.com/images/I/71-p1Bb9LvL._AC_UF1000,1000_QL80_.jpg',
+      'Plenty': 'https://images.penguinrandomhouse.com/cover/9781607747208',
+      'Cocktail Codex': 'https://images.penguinrandomhouse.com/cover/9780399580949',
+      'Half Baked Harvest Super Simple': 'https://m.media-amazon.com/images/I/91ElCTiJSSL._AC_UF1000,1000_QL80_.jpg',
+      'The Beer Bible': 'https://images.penguinrandomhouse.com/cover/9781607745259',
+      'The Flavor Bible': 'https://images.penguinrandomhouse.com/cover/9780399578007',
+      'Mastering the Art of French Cooking': 'https://images.penguinrandomhouse.com/cover/9781607747307',
+      'Cravings': 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1489020472i/34515463.jpg'
+    };
+
+    return bookCoverUrls[book.title] || `https://picsum.photos/seed/${book.id}/200/300`;
+  };
+
+  const getStatusColor = (status: Book['status']) => {
+    switch (status) {
+      case 'available':
+        return 'bg-green-100 text-green-800';
+      case 'borrowed':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'reserved':
+        return 'bg-blue-100 text-blue-800';
+      case 'maintenance':
+        return 'bg-red-100 text-red-800';
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -832,47 +778,67 @@ export function Books() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center">
-        <div className="flex-1" />
+    <div className="space-y-8">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Books</h1>
+          <p className="mt-1 text-sm text-gray-500">Manage your library's book collection</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setViewMode('grid')}
+            className={`p-2.5 rounded-xl transition-all duration-200 ${
+              viewMode === 'grid' 
+                ? 'bg-blue-50 text-blue-600 shadow-sm' 
+                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+            }`}
+            title="Grid View"
+          >
+            <Grid className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => setViewMode('list')}
+            className={`p-2.5 rounded-xl transition-all duration-200 ${
+              viewMode === 'list' 
+                ? 'bg-blue-50 text-blue-600 shadow-sm' 
+                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+            }`}
+            title="List View"
+          >
+            <List className="w-5 h-5" />
+          </button>
         <button 
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto"
+            className="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
           onClick={() => setIsAddModalOpen(true)}
         >
           <Plus className="w-5 h-5 mr-2" />
           Add Book
         </button>
+        </div>
       </div>
 
-      <AddBookModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onAddBook={handleAddBook}
-      />
-
-      {!isAddModalOpen && (
-        <div className="w-full mb-4">
+      {/* Filter/Search Section */}
+      <div className="bg-white rounded-xl shadow-sm p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
             {/* Search */}
             <div className="w-full">
-              <label className="block md:hidden text-xs font-semibold mb-1 text-gray-600">Search</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search by title, author, or ISBN..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
             </div>
             {/* Filters */}
-            <div className="w-full flex flex-col sm:flex-row gap-2">
+          <div className="w-full flex flex-col sm:flex-row gap-3">
               <div className="flex-1">
-                <label className="block md:hidden text-xs font-semibold mb-1 text-gray-600">Category</label>
                 <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                 >
@@ -885,9 +851,8 @@ export function Books() {
                 </select>
               </div>
               <div className="flex-1">
-                <label className="block md:hidden text-xs font-semibold mb-1 text-gray-600">Status</label>
                 <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
                 >
@@ -901,11 +866,10 @@ export function Books() {
               </div>
             </div>
             {/* Sorting Controls */}
-            <div className="w-full flex flex-col sm:flex-row gap-2 md:justify-end">
+          <div className="w-full flex flex-col sm:flex-row gap-3 md:justify-end">
               <div className="flex-1">
-                <label className="block md:hidden text-xs font-semibold mb-1 text-gray-600">Sort by</label>
                 <select
-                  className="w-full px-2 py-1 border border-gray-300 rounded"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
                   value={sortField}
                   onChange={e => setSortField(e.target.value as any)}
                 >
@@ -917,9 +881,8 @@ export function Books() {
                 </select>
               </div>
               <div className="flex-1">
-                <label className="block md:hidden text-xs font-semibold mb-1 text-gray-600">Direction</label>
                 <select
-                  className="w-full px-2 py-1 border border-gray-300 rounded"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
                   value={sortDirection}
                   onChange={e => setSortDirection(e.target.value as any)}
                 >
@@ -930,67 +893,144 @@ export function Books() {
             </div>
           </div>
         </div>
+
+      {viewMode === 'grid' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          {sortedBooks.map((book) => (
+            <div
+              key={book.id}
+              className="group bg-white rounded-xl shadow-sm hover:shadow-md overflow-hidden transform transition-all duration-200 hover:scale-[1.02] border border-gray-100"
+            >
+              <div className="relative aspect-[2/3] bg-gray-50">
+                <img
+                  src={getBookCoverUrl(book)}
+                  alt={book.title}
+                  className="w-full h-full object-contain p-4"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://via.placeholder.com/200x300?text=No+Cover';
+                  }}
+                />
+                <div className="absolute top-3 right-3">
+                  <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${getStatusColor(book.status)}`}>
+                    {book.status.charAt(0).toUpperCase() + book.status.slice(1)}
+                  </span>
+                </div>
+              </div>
+              <div className="p-4 space-y-3">
+                <h3 className="text-lg font-semibold text-gray-900 line-clamp-1 group-hover:text-blue-600 transition-colors duration-200">{book.title}</h3>
+                <p className="text-sm text-gray-600 line-clamp-1">{book.author}</p>
+                <div className="flex items-center justify-between pt-2">
+                  <span className="text-xs font-medium text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full">{book.category}</span>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => handleEditBook(book.id)}
+                      className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                      title="Edit book"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => openDeleteModal(book.id)}
+                      className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-all duration-200"
+                      title="Delete book"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {sortedBooks.map((book) => (
+                  <tr key={book.id} className="hover:bg-gray-50 transition-colors duration-200">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center">
+                        <div className="h-12 w-8 flex-shrink-0">
+                          <img
+                            src={getBookCoverUrl(book)}
+                            alt={book.title}
+                            className="h-full w-full object-contain rounded"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = 'https://via.placeholder.com/80x120?text=No+Cover';
+                            }}
+                          />
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors duration-200">{book.title}</div>
+                          <div className="text-sm text-gray-500">{book.isbn}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{book.author}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="px-3 py-1.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-700">
+                        {book.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        {getStatusIcon(book.status)}
+                        <span className="ml-2 text-sm text-gray-900">
+                          {book.status.charAt(0).toUpperCase() + book.status.slice(1)}
+                        </span>
+                      </div>
+                      {book.dueDate && (
+                        <div className="text-xs text-gray-500">Due: {book.dueDate}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {book.location}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button 
+                        className="text-blue-600 hover:text-blue-900 mr-3 transition-colors duration-200 hover:bg-blue-50 p-1.5 rounded-lg" 
+                        onClick={() => handleEditBook(book.id)}
+                        title="Edit book"
+                      >
+                        <Edit className="w-5 h-5" />
+                      </button>
+                      <button 
+                        className="text-red-600 hover:text-red-900 transition-colors duration-200 hover:bg-red-50 p-1.5 rounded-lg"
+                        onClick={() => openDeleteModal(book.id)}
+                        title="Delete book"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {sortedBooks.map((book) => (
-                <tr key={book.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{book.title}</div>
-                    <div className="text-sm text-gray-500">{book.isbn}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{book.author}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                      {book.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      {getStatusIcon(book.status)}
-                      <span className="ml-2 text-sm text-gray-900">
-                        {book.status.charAt(0).toUpperCase() + book.status.slice(1)}
-                      </span>
-                    </div>
-                    {book.dueDate && (
-                      <div className="text-xs text-gray-500">Due: {book.dueDate}</div>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {book.location}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-blue-600 hover:text-blue-900 mr-3" onClick={() => handleEditBook(book.id)}>
-                      <Edit className="w-5 h-5" />
-                    </button>
-                    <button 
-                      className="text-red-600 hover:text-red-900"
-                      onClick={() => openDeleteModal(book.id)}
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Modals */}
+      <AddBookModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAddBook={handleAddBook}
+      />
 
       <EditBookModal
         isOpen={editModalOpen}
@@ -1000,19 +1040,19 @@ export function Books() {
       />
 
       {deleteModalOpen && (
-        <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200 pointer-events-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <h2 className="text-lg font-semibold mb-4 text-gray-900">Delete Book</h2>
             <p className="mb-6 text-gray-700">Are you sure you want to delete this book? This action cannot be undone.</p>
             <div className="flex justify-end gap-3">
               <button
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200"
+                className="px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200"
                 onClick={() => { setDeleteModalOpen(false); setDeleteBookId(null); }}
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700"
+                className="px-4 py-2.5 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors duration-200"
                 onClick={handleDeleteBook}
               >
                 Delete

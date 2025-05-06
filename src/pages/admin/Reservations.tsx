@@ -71,7 +71,7 @@ function AddReservationModal({ isOpen, onClose, onAddReservation, books, users }
   const [formData, setFormData] = useState<Omit<Reservation, 'id'>>({
     bookId: '',
     userId: '',
-    reservationDate: Date.now(),
+    reservationDate: new Date().toISOString(),
     status: 'pending',
     notes: ''
   });
@@ -85,21 +85,30 @@ function AddReservationModal({ isOpen, onClose, onAddReservation, books, users }
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl pointer-events-auto border border-gray-200 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 w-full max-w-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Add New Reservation</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <X className="w-6 h-6" />
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 bg-blue-50 rounded-lg">
+              <Book className="w-4 h-4 text-blue-600" />
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900">Add New Reservation</h2>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-all duration-200"
+          >
+            <X className="w-4 h-4" />
           </button>
         </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Book</label>
               <select
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={formData.bookId}
                 onChange={(e) => setFormData({ ...formData, bookId: e.target.value })}
               >
@@ -115,7 +124,7 @@ function AddReservationModal({ isOpen, onClose, onAddReservation, books, users }
               <label className="block text-sm font-medium text-gray-700 mb-1">User</label>
               <select
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={formData.userId}
                 onChange={(e) => setFormData({ ...formData, userId: e.target.value })}
               >
@@ -132,16 +141,16 @@ function AddReservationModal({ isOpen, onClose, onAddReservation, books, users }
               <input
                 type="date"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={new Date(formData.reservationDate).toISOString().split('T')[0]}
-                onChange={(e) => setFormData({ ...formData, reservationDate: new Date(e.target.value).getTime() })}
+                onChange={(e) => setFormData({ ...formData, reservationDate: new Date(e.target.value).toISOString() })}
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
               <select
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as Reservation['status'] })}
               >
@@ -154,7 +163,7 @@ function AddReservationModal({ isOpen, onClose, onAddReservation, books, users }
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
               <textarea
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 resize-none"
                 rows={3}
                 placeholder="Add any additional notes about this reservation..."
                 value={formData.notes}
@@ -162,19 +171,20 @@ function AddReservationModal({ isOpen, onClose, onAddReservation, books, users }
               />
             </div>
           </div>
-          <div className="flex justify-end space-x-3">
+
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             >
-              Add Reservation
+              Create Reservation
             </button>
           </div>
         </form>
@@ -370,11 +380,14 @@ const Reservations = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header: New Reservation button right */}
-      <div className="flex items-center mb-2">
-        <div className="flex-1" />
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Reservations</h1>
+          <p className="mt-1 text-sm text-gray-500">Manage and track book reservations</p>
+        </div>
         <button 
-          className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 ml-auto"
+          className="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
           onClick={() => setIsAddModalOpen(true)}
         >
           <Plus className="w-5 h-5 mr-2" />
@@ -382,143 +395,176 @@ const Reservations = () => {
         </button>
       </div>
 
-      {/* Search, Filter and Sort Row */}
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex-1 max-w-sm">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search by book or user..."
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Reservations</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{reservations.length}</p>
+            </div>
+            <div className="p-3 bg-blue-50 rounded-xl">
+              <Book className="w-6 h-6 text-blue-600" />
+            </div>
           </div>
         </div>
-        <div className="flex items-center space-x-4">
-          <select
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value as any)}
-          >
-            <option value="all">All Status</option>
-            <option value="pending">Pending</option>
-            <option value="active">Active</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-          <div className="flex items-center space-x-2">
-            <select
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={sortField}
-              onChange={(e) => setSortField(e.target.value as any)}
-            >
-              <option value="date">Date</option>
-              <option value="book">Book</option>
-              <option value="user">User</option>
-              <option value="status">Status</option>
-            </select>
-            <select
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={sortDirection}
-              onChange={(e) => setSortDirection(e.target.value as any)}
-            >
-              <option value="desc">Descending</option>
-              <option value="asc">Ascending</option>
-            </select>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Active</p>
+              <p className="text-2xl font-bold text-green-600 mt-1">
+                {reservations.filter(r => r.status === 'active').length}
+              </p>
+            </div>
+            <div className="p-3 bg-green-50 rounded-xl">
+              <CheckCircle2 className="w-6 h-6 text-green-600" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Pending</p>
+              <p className="text-2xl font-bold text-yellow-600 mt-1">
+                {reservations.filter(r => r.status === 'pending').length}
+              </p>
+            </div>
+            <div className="p-3 bg-yellow-50 rounded-xl">
+              <Clock className="w-6 h-6 text-yellow-600" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Completed</p>
+              <p className="text-2xl font-bold text-blue-600 mt-1">
+                {reservations.filter(r => r.status === 'completed').length}
+              </p>
+            </div>
+            <div className="p-3 bg-blue-50 rounded-xl">
+              <CheckCircle2 className="w-6 h-6 text-blue-600" />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Reservations Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Book
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  User
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Dates
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Notes
-                </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredReservations.map((reservation) => (
-                <tr 
-                  key={reservation.id} 
-                  className="hover:bg-gray-50 transition-colors duration-150"
+      {/* Search and Filter Section */}
+      <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <div className="w-full">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search by book or user..."
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="md:col-span-3">
+            <div className="flex items-center space-x-4">
+              <select
+                className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value as any)}
+              >
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <div className="flex items-center space-x-2">
+                <select
+                  className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
+                  value={sortField}
+                  onChange={(e) => setSortField(e.target.value as any)}
                 >
-                  <td className="px-6 py-4">
-                    <div className="flex items-start">
-                      <ReservationIcon status={reservation.status} />
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{getBookTitle(reservation.bookId)}</div>
-                        <div className="text-sm text-gray-500">ID: {reservation.bookId}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">{getUserName(reservation.userId)}</div>
-                    <div className="text-sm text-gray-500">ID: {reservation.userId}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <StatusBadge status={reservation.status} />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {new Date(reservation.reservationDate).toLocaleDateString()}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {new Date(reservation.reservationDate).toLocaleTimeString()}
+                  <option value="date">Date</option>
+                  <option value="book">Book</option>
+                  <option value="user">User</option>
+                  <option value="status">Status</option>
+                </select>
+                <select
+                  className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
+                  value={sortDirection}
+                  onChange={(e) => setSortDirection(e.target.value as any)}
+                >
+                  <option value="desc">Descending</option>
+                  <option value="asc">Ascending</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Reservations Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {filteredReservations.map((reservation) => (
+          <div
+            key={reservation.id}
+            className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-gray-100"
+          >
+            <div className="p-6">
+              <div className="flex items-start space-x-4">
+                <ReservationIcon status={reservation.status} />
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-semibold text-gray-900 truncate">
+                    {getBookTitle(reservation.bookId)}
+                  </h3>
+                  <p className="text-sm text-gray-500 truncate">
+                    {getUserName(reservation.userId)}
+                  </p>
+                  <div className="mt-2 space-y-1">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+                      <span>Reserved: {new Date(reservation.reservationDate).toLocaleDateString()}</span>
                     </div>
                     {reservation.pickupDate && (
-                      <div className="text-xs text-gray-500 mt-1">
-                        Pickup: {new Date(reservation.pickupDate).toLocaleDateString()}
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Clock className="w-4 h-4 mr-2 text-gray-400" />
+                        <span>Pickup: {new Date(reservation.pickupDate).toLocaleDateString()}</span>
                       </div>
                     )}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-500">
-                      {reservation.notes || '-'}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex justify-end space-x-2">
-                      <ActionButton
-                        icon={Trash2}
-                        label="Delete"
-                        onClick={() => openDeleteModal(reservation)}
-                        color="text-red-600 hover:text-red-900"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {filteredReservations.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500">
-                    No reservations found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                    {reservation.expiryDate && (
+                      <div className="flex items-center text-sm text-gray-600">
+                        <AlertCircle className="w-4 h-4 mr-2 text-gray-400" />
+                        <span>Expires: {new Date(reservation.expiryDate).toLocaleDateString()}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 flex items-center justify-between">
+                <StatusBadge status={reservation.status} />
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => openDeleteModal(reservation)}
+                    className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-all duration-200"
+                    title="Delete reservation"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+        {filteredReservations.length === 0 && (
+          <div className="col-span-full">
+            <div className="bg-white rounded-xl shadow-sm p-8 text-center border border-gray-100">
+              <div className="flex flex-col items-center">
+                <Book className="w-12 h-12 text-gray-400 mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-1">No Reservations Found</h3>
+                <p className="text-sm text-gray-500">Try adjusting your search or filter criteria</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Modals */}

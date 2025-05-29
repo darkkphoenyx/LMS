@@ -13,12 +13,12 @@ interface AddFineModalProps {
 
 function AddFineModal({ isOpen, onClose, onAddFine, users, borrowings }: AddFineModalProps) {
   const [formData, setFormData] = useState<Omit<Fine, 'id'>>({
-    borrowingId: '',
     userId: '',
+    borrowingId: '',
     amount: 0,
-    dueDate: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days from now
+    reason: '',
     status: 'unpaid',
-    reason: ''
+    dueDate: Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days from now
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,94 +30,121 @@ function AddFineModal({ isOpen, onClose, onAddFine, users, borrowings }: AddFine
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl pointer-events-auto border border-gray-200 shadow-2xl">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Add New Fine</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">User</label>
-              <select
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.userId}
-                onChange={(e) => setFormData({ ...formData, userId: e.target.value })}
-              >
-                <option value="">Select a user</option>
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="bg-white rounded-2xl p-6 w-full max-w-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-50 rounded-xl">
+              <DollarSign className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Borrowing</label>
-              <select
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.borrowingId}
-                onChange={(e) => setFormData({ ...formData, borrowingId: e.target.value })}
-              >
-                <option value="">Select a borrowing</option>
-                {borrowings.map((borrowing) => (
-                  <option key={borrowing.id} value={borrowing.id}>
-                    Borrowing #{borrowing.id}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-              <input
-                type="number"
-                required
-                min="0"
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.amount}
-                onChange={(e) => setFormData({ ...formData, amount: parseFloat(e.target.value) })}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
-              <input
-                type="date"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={new Date(formData.dueDate).toISOString().split('T')[0]}
-                onChange={(e) => setFormData({ ...formData, dueDate: new Date(e.target.value).getTime() })}
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Reason</label>
-              <textarea
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows={3}
-                value={formData.reason}
-                onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-              />
+              <h2 className="text-xl font-semibold text-gray-900">Add New Fine</h2>
+              <p className="text-sm text-gray-500">Create a new fine record for overdue or damaged books</p>
             </div>
           </div>
-          <div className="flex justify-end space-x-3">
+          <button 
+            onClick={onClose} 
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-xl transition-all duration-200"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* User and Borrowing Selection */}
+          <div className="bg-gray-50 rounded-xl p-4">
+            <h3 className="text-sm font-medium text-gray-900 mb-4">Fine Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">User</label>
+                <select
+                  required
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  value={formData.userId}
+                  onChange={(e) => setFormData({ ...formData, userId: e.target.value })}
+                >
+                  <option value="">Select a user</option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Borrowing Record</label>
+                <select
+                  required
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  value={formData.borrowingId}
+                  onChange={(e) => setFormData({ ...formData, borrowingId: e.target.value })}
+                >
+                  <option value="">Select a borrowing record</option>
+                  {borrowings.map((borrowing) => (
+                    <option key={borrowing.id} value={borrowing.id}>
+                      {borrowing.bookId} - {new Date(borrowing.borrowDate).toLocaleDateString()}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Fine Information */}
+          <div className="bg-gray-50 rounded-xl p-4">
+            <h3 className="text-sm font-medium text-gray-900 mb-4">Fine Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Amount ($)</label>
+                <input
+                  type="number"
+                  required
+                  min="0"
+                  step="0.01"
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  value={formData.amount}
+                  onChange={(e) => setFormData({ ...formData, amount: parseFloat(e.target.value) })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Due Date</label>
+                <input
+                  type="date"
+                  required
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  value={new Date(formData.dueDate).toISOString().split('T')[0]}
+                  onChange={(e) => setFormData({ ...formData, dueDate: new Date(e.target.value).getTime() })}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Reason</label>
+                <textarea
+                  required
+                  rows={3}
+                  className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
+                  value={formData.reason}
+                  onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+                  placeholder="Enter the reason for the fine..."
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             >
-              Add Fine
+              Create Fine
             </button>
           </div>
         </form>
@@ -443,21 +470,15 @@ export function Fines() {
     .reduce((sum, fine) => sum + fine.amount, 0);
 
   return (
-    <div className="space-y-6">
-      {/* First Row: Totals on left, Add New Fine button on right */}
+    <div className="space-y-8 p-6 bg-gray-50 min-h-screen">
+      {/* Header Section */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div className="text-right">
-            <div className="text-sm text-gray-500">Total Unpaid</div>
-            <div className="text-xl font-semibold text-red-600">${totalUnpaid.toFixed(2)}</div>
-          </div>
-          <div className="text-right">
-            <div className="text-sm text-gray-500">Total Paid</div>
-            <div className="text-xl font-semibold text-green-600">${totalPaid.toFixed(2)}</div>
-          </div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Fines Management</h1>
+          <p className="mt-1 text-sm text-gray-500">Manage and track library fines</p>
         </div>
         <button 
-          className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
           onClick={() => setIsAddModalOpen(true)}
         >
           <Plus className="w-5 h-5 mr-2" />
@@ -465,120 +486,188 @@ export function Fines() {
         </button>
       </div>
 
-      {/* Second Row: Search on left, Unpaid/Paid tabs on right */}
-      <div className="flex items-center justify-between">
-        <div className="flex-1 max-w-sm">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search by user name..."
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Unpaid</p>
+              <p className="text-2xl font-bold text-red-600 mt-1">${totalUnpaid.toFixed(2)}</p>
+            </div>
+            <div className="p-3 bg-red-100 rounded-lg">
+              <AlertCircle className="w-6 h-6 text-red-600" />
+            </div>
           </div>
         </div>
-        <div className="flex items-center">
-          <nav className="-mb-px flex space-x-8 border-b border-gray-200">
-            {[
-              { id: 'unpaid', label: 'Unpaid', count: fines.filter(f => f.status === 'unpaid').length },
-              { id: 'paid', label: 'Paid', count: fines.filter(f => f.status === 'paid').length },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as 'unpaid' | 'paid')}
-                className={`${
-                  activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center`}
-              >
-                {tab.label}
-                <span className="ml-2 bg-gray-100 text-gray-600 rounded-full px-2 py-0.5 text-xs">
-                  {tab.count}
-                </span>
-              </button>
-            ))}
-          </nav>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Paid</p>
+              <p className="text-2xl font-bold text-green-600 mt-1">${totalPaid.toFixed(2)}</p>
+            </div>
+            <div className="p-3 bg-green-100 rounded-lg">
+              <CheckCircle2 className="w-6 h-6 text-green-600" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Unpaid Fines</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{fines.filter(f => f.status === 'unpaid').length}</p>
+            </div>
+            <div className="p-3 bg-blue-100 rounded-lg">
+              <DollarSign className="w-6 h-6 text-blue-600" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Paid Fines</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{fines.filter(f => f.status === 'paid').length}</p>
+            </div>
+            <div className="p-3 bg-purple-100 rounded-lg">
+              <CheckCircle2 className="w-6 h-6 text-purple-600" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search and Tabs */}
+      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex-1 max-w-sm">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search by user name..."
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex items-center">
+            <nav className="flex space-x-4 p-1 bg-gray-100 rounded-lg">
+              {[
+                { id: 'unpaid', label: 'Unpaid', count: fines.filter(f => f.status === 'unpaid').length },
+                { id: 'paid', label: 'Paid', count: fines.filter(f => f.status === 'paid').length },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as 'unpaid' | 'paid')}
+                  className={`${
+                    activeTab === tab.id
+                      ? 'bg-white text-blue-600 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  } px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center`}
+                >
+                  {tab.label}
+                  <span className="ml-2 bg-gray-100 text-gray-600 rounded-full px-2 py-0.5 text-xs">
+                    {tab.count}
+                  </span>
+                </button>
+              ))}
+            </nav>
+          </div>
         </div>
       </div>
 
       {/* Fines Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                User
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Amount
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Due Date
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredFines.map((fine) => (
-              <tr key={fine.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {getUserName(fine.userId)}
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Borrow ID: {fine.borrowingId}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    ${fine.amount.toFixed(2)}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">
-                    {new Date(fine.dueDate).toLocaleDateString()}
-                  </div>
-                  {fine.paidDate && (
-                    <div className="text-xs text-gray-500">
-                      Paid: {new Date(fine.paidDate).toLocaleDateString()}
-                    </div>
-                  )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    fine.status === 'unpaid' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
-                  }`}>
-                    {fine.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex justify-end space-x-2">
-                    <button 
-                      onClick={() => openEditModal(fine)}
-                      className="text-blue-600 hover:text-blue-900"
-                    >
-                      <Edit className="w-5 h-5" />
-                    </button>
-                    <button 
-                      onClick={() => openDeleteModal(fine)}
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </td>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  User
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Amount
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Due Date
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredFines.map((fine) => (
+                <tr key={fine.id} className="hover:bg-gray-50 transition-colors duration-150">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <span className="text-sm font-medium text-gray-600">
+                          {getUserName(fine.userId).charAt(0)}
+                        </span>
+                      </div>
+                      <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900">
+                          {getUserName(fine.userId)}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Borrow ID: {fine.borrowingId}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900">
+                      ${fine.amount.toFixed(2)}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {new Date(fine.dueDate).toLocaleDateString()}
+                    </div>
+                    {fine.paidDate && (
+                      <div className="text-xs text-gray-500">
+                        Paid: {new Date(fine.paidDate).toLocaleDateString()}
+                      </div>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      fine.status === 'unpaid' 
+                        ? 'bg-red-100 text-red-800' 
+                        : 'bg-green-100 text-green-800'
+                    }`}>
+                      {fine.status === 'unpaid' ? (
+                        <AlertCircle className="w-4 h-4 mr-1 inline" />
+                      ) : (
+                        <CheckCircle2 className="w-4 h-4 mr-1 inline" />
+                      )}
+                      {fine.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="flex justify-end space-x-3">
+                      <button 
+                        onClick={() => openEditModal(fine)}
+                        className="text-blue-600 hover:text-blue-900 transition-colors duration-200"
+                      >
+                        <Edit className="w-5 h-5" />
+                      </button>
+                      <button 
+                        onClick={() => openDeleteModal(fine)}
+                        className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Modals */}

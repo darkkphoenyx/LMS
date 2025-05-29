@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
-  Save, AlertCircle, Bell, BookOpen, Calendar, DollarSign, 
-  Users, Lock, Mail, Shield, Clock, RefreshCw, X 
+  Save, Bell, BookOpen, DollarSign, 
+  Shield, RefreshCw, X 
 } from 'lucide-react';
 import { db } from '../../lib/db';
 
@@ -107,12 +107,15 @@ export function Settings() {
   };
 
   const renderSection = (title: string, Icon: any, children: React.ReactNode) => (
-    <div className="bg-white rounded-lg shadow p-6 mb-6">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6 hover:shadow-md transition-all duration-200">
       <div className="flex items-center mb-6">
-        <div className="p-2 rounded-lg bg-blue-100 text-blue-600">
+        <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600">
           <Icon className="w-5 h-5" />
         </div>
-        <h3 className="ml-3 text-lg font-medium text-gray-900">{title}</h3>
+        <div className="ml-3">
+          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+          <p className="text-sm text-gray-500">Configure your {title.toLowerCase()} preferences</p>
+        </div>
       </div>
       {children}
     </div>
@@ -132,25 +135,39 @@ export function Settings() {
         step={step}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
       />
     </div>
   );
 
   const renderCheckbox = (label: string, checked: boolean, onChange: (checked: boolean) => void) => (
-    <label className="flex items-center space-x-3">
+    <label className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200 cursor-pointer">
       <input
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded transition-all duration-200"
       />
-      <span className="text-sm text-gray-700">{label}</span>
+      <span className="text-sm font-medium text-gray-700">{label}</span>
     </label>
   );
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="max-w-7xl mx-auto space-y-6 p-6">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">System Settings</h1>
+          <p className="mt-1 text-sm text-gray-500">Manage your library system preferences and configurations</p>
+        </div>
+        <button
+          onClick={() => setIsSaveModalOpen(true)}
+          className="inline-flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          <Save className="w-5 h-5 mr-2" />
+          Save Changes
+        </button>
+      </div>
+
       {/* Borrowing Rules */}
       {renderSection('Borrowing Rules', BookOpen, (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -260,7 +277,7 @@ export function Settings() {
               })
             )}
           </div>
-          <div className="border-t pt-6">
+          <div className="border-t border-gray-200 pt-6">
             <h4 className="text-sm font-medium text-gray-700 mb-4">Notification Channels</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {renderCheckbox(
@@ -351,7 +368,7 @@ export function Settings() {
                 ...settings,
                 system: { ...settings.system, backupFrequency: e.target.value }
               })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200"
             >
               <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>
@@ -369,40 +386,37 @@ export function Settings() {
         </div>
       ))}
 
-      {/* Save Button */}
-      <div className="flex justify-end mt-8">
-        <button
-          onClick={() => setIsSaveModalOpen(true)}
-          className="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          <Save className="w-5 h-5 mr-2" />
-          Save Settings
-        </button>
-      </div>
-
       {/* Save Settings Modal */}
       {isSaveModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md pointer-events-auto border border-gray-200 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl border border-gray-100">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Save Settings</h2>
-              <button onClick={() => setIsSaveModalOpen(false)} className="text-gray-500 hover:text-gray-700">
+              <div className="flex items-center">
+                <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
+                  <Save className="w-5 h-5" />
+                </div>
+                <h2 className="ml-3 text-xl font-semibold text-gray-900">Save Settings</h2>
+              </div>
+              <button 
+                onClick={() => setIsSaveModalOpen(false)}
+                className="text-gray-400 hover:text-gray-500 transition-colors duration-200"
+              >
                 <X className="w-6 h-6" />
               </button>
             </div>
-            <p className="mb-4 text-gray-600">Are you sure you want to save these settings?</p>
+            <p className="mb-6 text-gray-600">Are you sure you want to save these settings? This will update your system configuration.</p>
             <div className="flex justify-end space-x-3">
               <button
                 onClick={() => setIsSaveModalOpen(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                className="px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                className="px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all duration-200"
               >
-                Save
+                Save Changes
               </button>
             </div>
           </div>

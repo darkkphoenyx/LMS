@@ -1,7 +1,15 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { Navigation } from './Navigation';
-import { LogOut, Menu, X, User, Settings, ChevronDown, BookOpen } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { Navigation } from "./Navigation";
+import {
+  LogOut,
+  Menu,
+  X,
+  User,
+  Settings,
+  ChevronDown,
+  BookOpen,
+} from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
 const pageTitles: Record<string, string> = {
   "/admin/dashboard": "Dashboard",
@@ -20,19 +28,28 @@ export function AdminLayout() {
   const [profileOpen, setProfileOpen] = useState(false);
   const location = useLocation();
   const profileRef = useRef<HTMLDivElement>(null);
-  const title = pageTitles[location.pathname] || (location.pathname.split('/').pop()?.replace(/^[a-z]/, c => c.toUpperCase()) || 'Dashboard');
+  const title =
+    pageTitles[location.pathname] ||
+    location.pathname
+      .split("/")
+      .pop()
+      ?.replace(/^[a-z]/, (c) => c.toUpperCase()) ||
+    "Dashboard";
 
   // Handle click outside to close profile dropdown
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
         setProfileOpen(false);
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -46,9 +63,9 @@ export function AdminLayout() {
       {/* Mobile sidebar */}
       <div className="lg:hidden">
         {/* Sidebar */}
-        <div 
+        <div
           className={`fixed inset-y-0 left-0 flex flex-col w-72 bg-gradient-to-b from-white to-gray-50 transform transition-transform duration-300 ease-in-out z-50 ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
@@ -57,7 +74,11 @@ export function AdminLayout() {
                 <div className="p-2 bg-blue-600 rounded-lg">
                   <BookOpen className="h-6 w-6 text-white" />
                 </div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">BookWorm</h1>
+                <Link to={"/admin/dashboard"}>
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                    BookWorm
+                  </h1>
+                </Link>
               </div>
               <button
                 type="button"
@@ -87,7 +108,11 @@ export function AdminLayout() {
             <div className="p-2 bg-blue-600 rounded-lg">
               <BookOpen className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">BookWorm</h1>
+            <Link to={"/admin/dashboard"}>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                BookWorm
+              </h1>
+            </Link>
           </div>
         </div>
         <div className="mt-8 flex-1 flex flex-col overflow-y-auto">
@@ -120,7 +145,7 @@ export function AdminLayout() {
                 {title}
               </h2>
             </div>
-            
+
             {/* Profile Section */}
             <div className="ml-4 flex items-center md:ml-6">
               <div className="relative" ref={profileRef}>
@@ -137,7 +162,11 @@ export function AdminLayout() {
                     <p className="text-sm font-medium text-gray-900">Admin</p>
                     <p className="text-xs text-gray-500">Administrator</p>
                   </div>
-                  <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${profileOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
+                      profileOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
 
                 {/* Profile Dropdown */}
@@ -145,7 +174,9 @@ export function AdminLayout() {
                   <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-xl shadow-lg py-1 bg-white focus:outline-none animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="px-4 py-3 border-b border-gray-100">
                       <p className="text-sm font-medium text-gray-900">Admin</p>
-                      <p className="text-xs text-gray-500 truncate">admin@bookworm.com</p>
+                      <p className="text-xs text-gray-500 truncate">
+                        admin@bookworm.com
+                      </p>
                     </div>
                     <a
                       href="/admin/profile"
@@ -164,7 +195,9 @@ export function AdminLayout() {
                     <div className="border-t border-gray-100 my-1"></div>
                     <button
                       className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center transition-colors duration-200"
-                      onClick={() => {/* Add logout logic */}}
+                      onClick={() => {
+                        /* Add logout logic */
+                      }}
                     >
                       <LogOut className="h-4 w-4 mr-2" />
                       Logout

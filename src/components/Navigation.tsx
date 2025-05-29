@@ -5,12 +5,9 @@ import {
   Users, 
   Calendar, 
   DollarSign, 
-  BarChart2, 
   Settings, 
   Bell, 
-  Bookmark, 
-  Search,
-  User
+  Bookmark
 } from 'lucide-react';
 
 const navigation = [
@@ -61,12 +58,6 @@ const navigation = [
     href: '/admin/reservations',
     icon: Bookmark,
     description: 'Manage book reservations and waitlists'
-  },
-  {
-    name: 'Profile',
-    href: '/admin/profile',
-    icon: User,
-    description: 'View and edit your profile'
   }
 ];
 
@@ -93,23 +84,30 @@ export function Navigation({ onNavigate }: NavigationProps) {
             to={item.href}
             onClick={handleClick}
             className={`
-              group flex items-center px-3 py-2 text-sm font-medium rounded-md
+              group flex items-center px-4 py-3 text-sm font-medium rounded-lg
+              transition-all duration-200 ease-in-out
               ${isActive
-                ? 'bg-blue-100 text-blue-700'
+                ? 'bg-blue-50 text-blue-700 shadow-sm'
                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               }
             `}
           >
-            <item.icon
-              className={`
-                mr-3 flex-shrink-0 h-6 w-6
-                ${isActive ? 'text-blue-700' : 'text-gray-400 group-hover:text-gray-500'}
-              `}
-              aria-hidden="true"
-            />
-            <div>
-              <span className="block">{item.name}</span>
-              <span className="block text-xs text-gray-500">{item.description}</span>
+            <div className={`
+              p-2 rounded-lg mr-3
+              transition-colors duration-200
+              ${isActive 
+                ? 'bg-blue-100 text-blue-700' 
+                : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200 group-hover:text-gray-700'
+              }
+            `}>
+              <item.icon
+                className="h-5 w-5"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="flex-1">
+              <span className="block font-medium">{item.name}</span>
+              <span className="block text-xs text-gray-500 mt-0.5">{item.description}</span>
             </div>
           </Link>
         );

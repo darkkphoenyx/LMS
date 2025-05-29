@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Navigation } from './Navigation';
 import { LogOut, Menu, X, User, Settings, ChevronDown, BookOpen } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
@@ -19,6 +19,7 @@ export function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const profileRef = useRef<HTMLDivElement>(null);
   const title = pageTitles[location.pathname] || (location.pathname.split('/').pop()?.replace(/^[a-z]/, c => c.toUpperCase()) || 'Dashboard');
 
@@ -40,6 +41,11 @@ export function AdminLayout() {
   useEffect(() => {
     setProfileOpen(false);
   }, [location.pathname]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    navigate('/login');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -72,7 +78,10 @@ export function AdminLayout() {
             </div>
           </div>
           <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-            <button className="flex items-center text-red-600 hover:text-red-700 transition-colors duration-200">
+            <button 
+              onClick={handleLogout}
+              className="flex items-center text-red-600 hover:text-red-700 transition-colors duration-200"
+            >
               <LogOut className="h-5 w-5 mr-2" />
               <span>Logout</span>
             </button>
@@ -96,7 +105,10 @@ export function AdminLayout() {
           </div>
         </div>
         <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-          <button className="flex items-center text-red-600 hover:text-red-700 transition-colors duration-200">
+          <button 
+            onClick={handleLogout}
+            className="flex items-center text-red-600 hover:text-red-700 transition-colors duration-200"
+          >
             <LogOut className="h-5 w-5 mr-2" />
             <span>Logout</span>
           </button>
@@ -104,24 +116,20 @@ export function AdminLayout() {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-72 flex flex-col flex-1">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white">
+      <div className="lg:pl-72">
+        <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow-sm">
           <button
             type="button"
             className="px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
+            onClick={() => setSidebarOpen(true)}
           >
-            <span className="sr-only">Toggle sidebar</span>
+            <span className="sr-only">Open sidebar</span>
             <Menu className="h-6 w-6" />
           </button>
-          <div className="flex-1 px-4 flex justify-between">
-            <div className="flex-1 flex">
-              <h2 className="text-lg font-medium text-gray-900 self-center">
-                {title}
-              </h2>
+          <div className="flex flex-1 justify-between px-4">
+            <div className="flex flex-1">
+              <h1 className="text-2xl font-semibold text-gray-900 flex items-center">{title}</h1>
             </div>
-            
-            {/* Profile Section */}
             <div className="ml-4 flex items-center md:ml-6">
               <div className="relative" ref={profileRef}>
                 <button
@@ -163,8 +171,8 @@ export function AdminLayout() {
                     </a>
                     <div className="border-t border-gray-100 my-1"></div>
                     <button
+                      onClick={handleLogout}
                       className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center transition-colors duration-200"
-                      onClick={() => {/* Add logout logic */}}
                     >
                       <LogOut className="h-4 w-4 mr-2" />
                       Logout

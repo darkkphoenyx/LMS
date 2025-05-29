@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { AdminLayout } from '../components/AdminLayout';
 import { Dashboard } from '../pages/admin/Dashboard';
 import { Books } from '../pages/admin/Books';
@@ -11,11 +11,33 @@ import Notifications from '../pages/admin/Notifications';
 import Reservations from '../pages/admin/Reservations';
 import { SearchPage } from '../pages/admin/Search';
 import { Profile } from '../pages/admin/Profile';
+import { Login } from '../pages/Login';
+
+// Authentication check function
+const isAuthenticated = () => {
+  return localStorage.getItem('isAuthenticated') === 'true';
+};
+
+// Protected route wrapper
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
+};
 
 export const router = createBrowserRouter([
   {
+    path: '/login',
+    element: <Login />
+  },
+  {
     path: '/',
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: 'admin/dashboard',
@@ -63,7 +85,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <Dashboard />
+        element: <Navigate to="/admin/dashboard" replace />
       }
     ]
   }

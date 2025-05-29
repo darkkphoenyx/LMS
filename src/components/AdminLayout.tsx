@@ -1,38 +1,46 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { Navigation } from './Navigation';
-import { LogOut, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Outlet, useLocation } from "react-router-dom";
+import { Navigation } from "./Navigation";
+import { LogOut, Menu, X } from "lucide-react";
+import { useState } from "react";
 
 const pageTitles: Record<string, string> = {
-  '/admin/dashboard': 'Dashboard',
-  '/admin/books': 'Books',
-  '/admin/users': 'Users',
-  '/admin/borrowings': 'Borrowings',
-  '/admin/fines': 'Fines',
-  '/admin/settings': 'Settings',
-  '/admin/notifications': 'Notifications',
-  '/admin/reservations': 'Reservations',
-  '/admin/profile': 'Profile',
+  "/admin/dashboard": "Dashboard",
+  "/admin/books": "Books",
+  "/admin/users": "Users",
+  "/admin/borrowings": "Borrowings",
+  "/admin/fines": "Fines",
+  "/admin/settings": "Settings",
+  "/admin/notifications": "Notifications",
+  "/admin/reservations": "Reservations",
+  "/admin/profile": "Profile",
 };
 
 export function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-  const title = pageTitles[location.pathname] || (location.pathname.split('/').pop()?.replace(/^[a-z]/, c => c.toUpperCase()) || 'Dashboard');
+  const title =
+    pageTitles[location.pathname] ||
+    location.pathname
+      .split("/")
+      .pop()
+      ?.replace(/^[a-z]/, (c) => c.toUpperCase()) ||
+    "Dashboard";
 
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Mobile sidebar */}
       <div className="lg:hidden">
         {/* Sidebar */}
-        <div 
+        <div
           className={`fixed inset-y-0 left-0 flex flex-col w-64 bg-white transform transition-transform duration-200 ease-in-out z-50 ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <div className="flex items-center justify-between px-4">
-              <h1 className="text-xl font-bold text-gray-900">Library Management</h1>
+              <h1 className="text-xl font-bold text-gray-900">
+                BookWorm
+              </h1>
               <button
                 type="button"
                 className="text-gray-500 hover:text-gray-900"
@@ -57,7 +65,7 @@ export function AdminLayout() {
       {/* Desktop sidebar */}
       <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-gray-200 lg:pt-5 lg:pb-4 lg:bg-white">
         <div className="flex items-center flex-shrink-0 px-4">
-          <h1 className="text-xl font-bold text-gray-900">Library Management</h1>
+          <h1 className="text-xl font-bold text-gray-900">BookWorm</h1>
         </div>
         <div className="mt-5 flex-1 flex flex-col overflow-y-auto">
           <div className="px-3">
@@ -102,4 +110,4 @@ export function AdminLayout() {
       </div>
     </div>
   );
-} 
+}

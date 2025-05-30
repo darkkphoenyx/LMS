@@ -171,7 +171,8 @@ export function Reports() {
                   data={[
                     { name: 'Available', value: books.filter(b => b.status === 'available').length },
                     { name: 'Borrowed', value: books.filter(b => b.status === 'borrowed').length },
-                    { name: 'Lost', value: books.filter(b => b.status === 'lost').length },
+                    { name: 'Reserved', value: books.filter(b => b.status === 'reserved').length },
+                    { name: 'Maintenance', value: books.filter(b => b.status === 'maintenance').length },
                   ]}
                   cx="50%"
                   cy="50%"

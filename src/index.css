@@ -135,6 +135,10 @@
   @apply cursor-pointer active:translate-y-0.5 transition-all md:text-lg bg-white;
 }
 
+.button5 {
+  @apply cursor-pointer text-lg rounded-sm bg-blue-700 active:translate-y-0.5 transition-all;
+}
+
 .header1 {
   @apply text-3xl text-center px-1 md:px-0 md:text-start md:text-4xl font-bold mb-6 text-indigo-900;
 }

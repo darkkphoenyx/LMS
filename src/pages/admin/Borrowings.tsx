@@ -447,22 +447,7 @@ export function Borrowings() {
   const getBookCoverUrl = (bookId: string) => {
     const book = books.find(b => b.id === bookId);
     if (!book) return 'https://via.placeholder.com/150x200?text=No+Cover';
-    
-    // Map of book titles to their image URLs
-    const bookCoverUrls: { [key: string]: string } = {
-      'The Alchemist': 'https://img.perlego.com/book-covers/598007/9780062416216_300_450.webp',
-      'Harry Potter Series (1-7 Bundle)': 'https://www.curiosasociety.com/cdn/shop/products/HPBoxSet_Soft_Front.jpg?v=1571439832',
-      'The Art of War': 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1630683326i/10534.jpg',
-      '1984': 'https://archive.org/services/img/george-orwell-1984_202309/full/pct:200/0/default.jpg',
-      'To Kill a Mockingbird': 'https://grey.com.np/cdn/shop/products/book-cover-To-Kill-a-Mockingbird-many-1961.webp?v=1669894816',
-      'The Great Gatsby': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/The_Great_Gatsby_Cover_1925_Retouched.jpg/960px-The_Great_Gatsby_Cover_1925_Retouched.jpg',
-      'Think and Grow Rich': 'https://media.thuprai.com/__sized__/front_covers/think-and-grow-rich-f.jpg-thumbnail-280x405-70.jpg',
-      'Sapiens: A Brief History of Humankind': 'https://media.thuprai.com/products/Sapiens__A_Brief_History_of_Humankind.jpg',
-      'The Subtle Art of Not Giving a F*ck': 'https://booksmandala.com/_next/image?url=https%3A%2F%2Fbooks.bizmandala.com%2Fmedia%2Fbooks%2F9780062641540%2F9780062641540-9434.webp&w=3840&q=75',
-      'The Hobbit': 'https://img1.od-cdn.com/ImageType-400/0293-1/%7BC9B54C84-0369-49C5-A0B3-98E3353A2129%7DIMG400.JPG',
-    };
-
-    return bookCoverUrls[book.title] || `https://picsum.photos/seed/${book.id}/150/200`;
+    return book.imageUrl || 'https://via.placeholder.com/150x200?text=No+Cover';
   };
 
   return (

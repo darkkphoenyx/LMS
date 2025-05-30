@@ -718,31 +718,7 @@ export function Books() {
   };
 
   const getBookCoverUrl = (book: Book) => {
-    // Map of book titles to their image URLs
-    const bookCoverUrls: { [key: string]: string } = {
-      'The Alchemist': 'https://img.perlego.com/book-covers/598007/9780062416216_300_450.webp',
-      'Harry Potter Series (1-7 Bundle)': 'https://www.curiosasociety.com/cdn/shop/products/HPBoxSet_Soft_Front.jpg?v=1571439832',
-      'The Art of War': 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1630683326i/10534.jpg',
-      '1984': 'https://archive.org/services/img/george-orwell-1984_202309/full/pct:200/0/default.jpg',
-      'To Kill a Mockingbird': 'https://grey.com.np/cdn/shop/products/book-cover-To-Kill-a-Mockingbird-many-1961.webp?v=1669894816',
-      'The Great Gatsby': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/The_Great_Gatsby_Cover_1925_Retouched.jpg/960px-The_Great_Gatsby_Cover_1925_Retouched.jpg',
-      'Think and Grow Rich': 'https://media.thuprai.com/__sized__/front_covers/think-and-grow-rich-f.jpg-thumbnail-280x405-70.jpg',
-      'Sapiens: A Brief History of Humankind': 'https://media.thuprai.com/products/Sapiens__A_Brief_History_of_Humankind.jpg',
-      'The Subtle Art of Not Giving a F*ck': 'https://booksmandala.com/_next/image?url=https%3A%2F%2Fbooks.bizmandala.com%2Fmedia%2Fbooks%2F9780062641540%2F9780062641540-9434.webp&w=3840&q=75',
-      'The Hobbit': 'https://img1.od-cdn.com/ImageType-400/0293-1/%7BC9B54C84-0369-49C5-A0B3-98E3353A2129%7DIMG400.JPG',
-      'Salt, Fat, Acid, Heat': 'https://images.penguinrandomhouse.com/cover/9780399582752',
-      'The Food Lab': 'https://m.media-amazon.com/images/I/515afUMn3aL.jpg',
-      'How to Cook Everything': 'https://m.media-amazon.com/images/I/71-p1Bb9LvL._AC_UF1000,1000_QL80_.jpg',
-      'Plenty': 'https://images.penguinrandomhouse.com/cover/9781607747208',
-      'Cocktail Codex': 'https://images.penguinrandomhouse.com/cover/9780399580949',
-      'Half Baked Harvest Super Simple': 'https://m.media-amazon.com/images/I/91ElCTiJSSL._AC_UF1000,1000_QL80_.jpg',
-      'The Beer Bible': 'https://images.penguinrandomhouse.com/cover/9781607745259',
-      'The Flavor Bible': 'https://images.penguinrandomhouse.com/cover/9780399578007',
-      'Mastering the Art of French Cooking': 'https://images.penguinrandomhouse.com/cover/9781607747307',
-      'Cravings': 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1489020472i/34515463.jpg'
-    };
-
-    return bookCoverUrls[book.title] || `https://picsum.photos/seed/${book.id}/200/300`;
+    return book.imageUrl || 'https://via.placeholder.com/200x300?text=No+Cover';
   };
 
   const getStatusColor = (status: Book['status']) => {

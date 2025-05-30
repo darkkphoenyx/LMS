@@ -80,9 +80,11 @@ export function AdminLayout() {
                 <div className="p-2 bg-blue-600 rounded-lg">
                   <BookOpen className="h-6 w-6 text-white" />
                 </div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-                  BookWorm
-                </h1>
+                <Link to={"/admin/dashboard"}>
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                    BookWorm
+                  </h1>
+                </Link>
               </div>
               <button
                 type="button"
@@ -115,9 +117,11 @@ export function AdminLayout() {
             <div className="p-2 bg-blue-600 rounded-lg">
               <BookOpen className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-              BookWorm
-            </h1>
+            <Link to={"/admin/dashboard"}>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                BookWorm
+              </h1>
+            </Link>
           </div>
         </div>
         <div className="mt-8 flex-1 flex flex-col overflow-y-auto">
@@ -153,6 +157,8 @@ export function AdminLayout() {
                 {title}
               </h1>
             </div>
+
+            {/* Profile Section */}
             <div className="ml-4 flex items-center md:ml-6">
               <div className="relative" ref={profileRef}>
                 <button
@@ -201,8 +207,7 @@ export function AdminLayout() {
                     <div className="border-t border-gray-100 my-1"></div>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center transition-colors duration-200"
-                    >
+                      className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center transition-colors duration-200">
                       <LogOut className="h-4 w-4 mr-2" />
                       Logout
                     </button>

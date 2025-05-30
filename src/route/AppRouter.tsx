@@ -19,11 +19,16 @@ import Notifications from "../pages/admin/Notifications";
 import Reservations from "../pages/admin/Reservations";
 import { SearchPage } from "../pages/admin/Search";
 import { Profile } from "../pages/admin/Profile";
+import { Login } from "../pages/Login";
+import AdminRoutes from "./wrapper/admin-route-wrapper";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* login route */}
+        <Route path={ROUTES.ROOT.LOGIN} element={<Login />} />
+
         {/* homepage */}
         <Route element={<Layout />}>
           <Route path={ROUTES.ROOT.HOME} element={<Homepage />} />
@@ -34,18 +39,23 @@ const AppRouter = () => {
         </Route>
 
         {/* Admin routes */}
-        <Route element={<AdminLayout />}>
-          <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
-          <Route path={ROUTES.ADMIN.BOOKS} element={<Books />} />
-          <Route path={ROUTES.ADMIN.USERS} element={<Users />} />
-          <Route path={ROUTES.ADMIN.BORROWING} element={<Borrowings />} />
-          <Route path={ROUTES.ADMIN.FINES} element={<Fines />} />
-          <Route path={ROUTES.ADMIN.REPORTS} element={<Reports />} />
-          <Route path={ROUTES.ADMIN.SETTINGS} element={<Settings />} />
-          <Route path={ROUTES.ADMIN.NOTIFICATION} element={<Notifications />} />
-          <Route path={ROUTES.ADMIN.RESERVATION} element={<Reservations />} />
-          <Route path={ROUTES.ADMIN.SEARCH} element={<SearchPage />} />
-          <Route path={ROUTES.ADMIN.PROFILES} element={<Profile />} />
+        <Route element={<AdminRoutes />}>
+          <Route element={<AdminLayout />}>
+            <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
+            <Route path={ROUTES.ADMIN.BOOKS} element={<Books />} />
+            <Route path={ROUTES.ADMIN.USERS} element={<Users />} />
+            <Route path={ROUTES.ADMIN.BORROWING} element={<Borrowings />} />
+            <Route path={ROUTES.ADMIN.FINES} element={<Fines />} />
+            <Route path={ROUTES.ADMIN.REPORTS} element={<Reports />} />
+            <Route path={ROUTES.ADMIN.SETTINGS} element={<Settings />} />
+            <Route
+              path={ROUTES.ADMIN.NOTIFICATION}
+              element={<Notifications />}
+            />
+            <Route path={ROUTES.ADMIN.RESERVATION} element={<Reservations />} />
+            <Route path={ROUTES.ADMIN.SEARCH} element={<SearchPage />} />
+            <Route path={ROUTES.ADMIN.PROFILES} element={<Profile />} />
+          </Route>
         </Route>
 
         {/* not found routes */}

@@ -57,7 +57,9 @@ const Navbar = () => {
               <IoMdCart className="cursor-pointer" fontSize={30} />
             </div>
             <div className="flex items-center">
-              <Button className="button1">Login</Button>
+              <Link to={"/login"}>
+                <Button className="button1">Login</Button>
+              </Link>
             </div>
           </div>
           {!isMobile ? (
@@ -114,7 +116,9 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
-              <Button className="button1">Login</Button>
+              <Link to={"/login"}>
+                <Button className="button1">Login</Button>
+              </Link>
             </ul>
           </div>
         )}

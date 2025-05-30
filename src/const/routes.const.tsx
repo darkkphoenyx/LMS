@@ -2,6 +2,7 @@ export const ROUTES = {
   ROOT: {
     HOME: "/",
     DASHBOARD: "/dashboard",
+    LOGIN: "/login",
     NOT_FOUND: "*",
   },
   USER: {
@@ -22,6 +23,5 @@ export const ROUTES = {
     RESERVATION: "/admin/reservations",
     SEARCH: "/admin/search",
     PROFILES: "/admin/profile",
-    DEFAULT: "/dashboard",
   },
 };

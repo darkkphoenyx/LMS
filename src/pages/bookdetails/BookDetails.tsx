@@ -1,8 +1,8 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Breadcrumbs, Typography } from "@mui/material";
+import { Breadcrumbs, Typography, Dialog, DialogContent } from "@mui/material";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Star } from "lucide-react";
+import { Star, AlertCircle, X } from "lucide-react";
 import { booksData } from "../../const/data/books-data";
 import { useState } from "react";
 import BorrowForm from "../../components/BorrowForm";
@@ -12,6 +12,7 @@ export default function BookDetails() {
   const navigate = useNavigate();
   const book = booksData.find((item) => item.name === name);
   const [borrowFormOpen, setBorrowFormOpen] = useState(false);
+  const [adminWarningOpen, setAdminWarningOpen] = useState(false);
 
   const userString = localStorage.getItem("user");
   const user = userString ? JSON.parse(userString) : null;
@@ -29,8 +30,8 @@ export default function BookDetails() {
     }
 
     if (user.role === "ADMIN") {
-      // Optionally show a message that admins cannot borrow books
-      alert("Administrators cannot borrow books");
+      // Show the admin warning modal
+      setAdminWarningOpen(true);
       return;
     }
 
@@ -133,6 +134,52 @@ export default function BookDetails() {
           </div>
         </div>
       </div>
+
+      {/* Admin Warning Modal */}
+      <Dialog 
+        open={adminWarningOpen} 
+        onClose={() => setAdminWarningOpen(false)}
+        PaperProps={{
+          className: "rounded-2xl"
+        }}
+      >
+        <DialogContent className="p-0">
+          <div className="relative">
+            {/* Close button */}
+            <button
+              onClick={() => setAdminWarningOpen(false)}
+              className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="p-6 sm:p-8">
+              {/* Icon and Title */}
+              <div className="flex flex-col items-center text-center mb-6">
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+                  <AlertCircle className="w-8 h-8 text-amber-600" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Administrator Notice
+                </h2>
+                <p className="text-gray-600 max-w-sm">
+                  As an administrator, you don't have borrowing privileges. This feature is reserved for regular library members.
+                </p>
+              </div>
+
+              {/* Action Button */}
+              <div className="mt-6 flex justify-center">
+                <button
+                  onClick={() => setAdminWarningOpen(false)}
+                  className="px-6 py-2.5 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition-colors duration-200 font-medium"
+                >
+                  I Understand
+                </button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Borrow Form - Only shown for authenticated users */}
       {user && user.role === "USER" && (

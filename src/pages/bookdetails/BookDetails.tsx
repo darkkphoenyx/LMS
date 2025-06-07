@@ -2,16 +2,18 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { Breadcrumbs, Typography, Dialog, DialogContent } from "@mui/material";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Star, AlertCircle, X } from "lucide-react";
+import { Star, AlertCircle } from "lucide-react";
 import { booksData } from "../../const/data/books-data";
 import { useState } from "react";
 import BorrowForm from "../../components/BorrowForm";
+import BuyForm from "../../components/BuyForm";
 
 export default function BookDetails() {
   const { name } = useParams();
   const navigate = useNavigate();
   const book = booksData.find((item) => item.name === name);
   const [borrowFormOpen, setBorrowFormOpen] = useState(false);
+  const [buyFormOpen, setBuyFormOpen] = useState(false);
   const [adminWarningOpen, setAdminWarningOpen] = useState(false);
 
   const userString = localStorage.getItem("user");
@@ -36,6 +38,20 @@ export default function BookDetails() {
     }
 
     setBorrowFormOpen(true);
+  };
+
+  const handleBuyClick = () => {
+    if (!user) {
+      navigate("/login", { 
+        state: { 
+          from: `/book-details/${encodeURIComponent(name || "")}`,
+          message: "Please log in to purchase books" 
+        } 
+      });
+      return;
+    }
+
+    setBuyFormOpen(true);
   };
 
   if (!book) {
@@ -69,148 +85,115 @@ export default function BookDetails() {
     .slice(0, 4);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-4 md:p-6 max-w-7xl mx-auto">
       {/* Breadcrumbs Section */}
-      <div className="bg-[#f0f0f0] py-8 mb-4 text-center">
-        <h2 className="text-5xl font-extrabold mb-4">
+      <div className="bg-[#f0f0f0] py-4 md:py-8 mb-4 text-center px-4">
+        <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
           Book <span className="text-[#002fff]">Details</span>
         </h2>
 
         <div className="flex justify-center">
-          <Breadcrumbs aria-label="breadcrumb">
+          <Breadcrumbs aria-label="breadcrumb" className="text-sm md:text-base">
             <Link to="/" className="text-blue-600 hover:underline">
               Home
             </Link>
             <Link to="/books" className="text-blue-600 hover:underline">
               Books
             </Link>
-            <Typography color="textPrimary">{book.name}</Typography>
+            <Typography color="textPrimary" className="truncate max-w-[200px] md:max-w-none">
+              {book.name}
+            </Typography>
           </Breadcrumbs>
         </div>
       </div>
 
       {/* Book Info Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-        <div className="lg:h-[450px] p-2 rounded-lg shadow-md overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 md:mb-16">
+        <div className="lg:h-[450px] p-2 rounded-lg shadow-md overflow-hidden bg-white">
           <img
             src={book.imageUrl}
             alt={book.name}
             className="w-full h-full object-contain"
           />
         </div>
-        <div className="space-y-4 px-8">
-          <h1 className="text-3xl font-bold">{book.name}</h1>
+        <div className="space-y-4 px-4 md:px-8">
+          <h1 className="text-2xl md:text-3xl font-bold break-words">{book.name}</h1>
           <div className="flex items-center space-x-2">
             {renderStars(book.rating)}
             <span className="text-sm text-gray-600">
               ({book.soldUnit.toLocaleString()} sold)
             </span>
           </div>
-          <p className="text-gray-600">Author: {book.author}</p>
-          <p className="text-gray-600">Genre: {book.genre}</p>
-          <p className="text-sm text-gray-500 italic">
-            Edition: {book.edition}
-          </p>
-          <p className="text-xl font-semibold text-green-600">
-            ${book.price.toFixed(2)}
-          </p>
-          <p className="text-sm text-gray-500">
-            Available Quantity: {book.availableQuantity}
-          </p>
-          <div className="flex space-x-4 mt-4">
-            <button
-              onClick={handleBorrowClick}
-              className="bg-black text-white px-4 py-2 rounded hover:bg-gray-900 flex items-center space-x-2 cursor-pointer"
-            >
-              <span>Borrow</span>
-            </button>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center space-x-2 cursor-pointer">
-              <LocalMallIcon />
-              <span>Buy Now</span>
-            </button>
-            <button className="text-gray-400 hover:text-red-500">
-              <FavoriteIcon />
-            </button>
+          <div className="space-y-2 py-2">
+            <p className="text-gray-600 flex items-center gap-2">
+              <span className="font-medium min-w-[80px]">Author:</span>
+              <span>{book.author}</span>
+            </p>
+            <p className="text-gray-600 flex items-center gap-2">
+              <span className="font-medium min-w-[80px]">Genre:</span>
+              <span>{book.genre}</span>
+            </p>
+            <p className="text-gray-600 flex items-center gap-2">
+              <span className="font-medium min-w-[80px]">Edition:</span>
+              <span className="italic">{book.edition}</span>
+            </p>
+          </div>
+          <div className="flex flex-col gap-4 pt-2">
+            <div className="flex items-center justify-between">
+              <p className="text-2xl font-semibold text-green-600">
+                ${book.price.toFixed(2)}
+              </p>
+              <p className="text-sm text-gray-500">
+                Available: {book.availableQuantity}
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:justify-start">
+              <button
+                onClick={handleBorrowClick}
+                className="bg-black text-white w-full sm:w-32 px-4 py-2.5 rounded-lg hover:bg-gray-900 flex items-center justify-center gap-2 transition-colors"
+              >
+                <span>Borrow</span>
+              </button>
+              <button 
+                onClick={handleBuyClick}
+                className="bg-blue-600 text-white w-full sm:w-32 px-4 py-2.5 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 transition-colors"
+              >
+                <LocalMallIcon />
+                <span>Buy Now</span>
+              </button>
+              <button 
+                className="text-gray-400 hover:text-red-500 p-2.5 border border-gray-200 rounded-lg hover:border-red-200 transition-colors"
+              >
+                <FavoriteIcon />
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Admin Warning Modal */}
-      <Dialog 
-        open={adminWarningOpen} 
-        onClose={() => setAdminWarningOpen(false)}
-        PaperProps={{
-          className: "rounded-2xl"
-        }}
-      >
-        <DialogContent className="p-0">
-          <div className="relative">
-            {/* Close button */}
-            <button
-              onClick={() => setAdminWarningOpen(false)}
-              className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="p-6 sm:p-8">
-              {/* Icon and Title */}
-              <div className="flex flex-col items-center text-center mb-6">
-                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-                  <AlertCircle className="w-8 h-8 text-amber-600" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  Administrator Notice
-                </h2>
-                <p className="text-gray-600 max-w-sm">
-                  As an administrator, you don't have borrowing privileges. This feature is reserved for regular library members.
-                </p>
-              </div>
-
-              {/* Action Button */}
-              <div className="mt-6 flex justify-center">
-                <button
-                  onClick={() => setAdminWarningOpen(false)}
-                  className="px-6 py-2.5 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition-colors duration-200 font-medium"
-                >
-                  I Understand
-                </button>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Borrow Form - Only shown for authenticated users */}
-      {user && user.role === "USER" && (
-        <BorrowForm
-          open={borrowFormOpen}
-          onClose={() => setBorrowFormOpen(false)}
-          bookName={book.name}
-        />
-      )}
-
       {/* Related Books */}
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Related Books</h2>
+        <h2 className="text-xl md:text-2xl font-semibold mb-4">Related Books</h2>
 
         {relatedBooks.length === 0 ? (
           <p className="text-gray-500">No related books available.</p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
             {relatedBooks.map((related, idx) => (
               <Link
                 key={idx}
                 to={`/book-details/${encodeURIComponent(related.name)}`}
-                className="border p-3 rounded hover:shadow-md"
+                className="border rounded-lg p-3 hover:shadow-md transition-shadow bg-white"
               >
-                <img
-                  src={related.imageUrl}
-                  alt={related.name}
-                  className="w-full h-48 object-contain"
-                />
-                <h3 className="text-sm font-medium mt-2">{related.name}</h3>
-                <p className="text-xs text-gray-500">{related.author}</p>
+                <div className="aspect-[3/4] mb-3">
+                  <img
+                    src={related.imageUrl}
+                    alt={related.name}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-sm font-medium line-clamp-2 mb-1">{related.name}</h3>
+                <p className="text-xs text-gray-500 mb-2">{related.author}</p>
                 <p className="text-sm font-semibold text-green-600">
                   ${related.price.toFixed(2)}
                 </p>
@@ -219,6 +202,40 @@ export default function BookDetails() {
           </div>
         )}
       </div>
+
+      {/* Admin Warning Modal */}
+      <Dialog
+        open={adminWarningOpen}
+        onClose={() => setAdminWarningOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogContent className="p-6">
+          <div className="flex items-center gap-3 text-amber-600 mb-4">
+            <AlertCircle className="w-6 h-6" />
+            <span className="font-medium">Admin Notice</span>
+          </div>
+          <p className="text-gray-600">
+            As an admin, you cannot borrow books. This feature is only available for regular users.
+          </p>
+        </DialogContent>
+      </Dialog>
+
+      {user && user.role === "USER" && (
+        <>
+          <BorrowForm
+            open={borrowFormOpen}
+            onClose={() => setBorrowFormOpen(false)}
+            bookName={book.name}
+          />
+          <BuyForm
+            open={buyFormOpen}
+            onClose={() => setBuyFormOpen(false)}
+            bookName={book.name}
+            price={book.price}
+          />
+        </>
+      )}
     </div>
   );
 }

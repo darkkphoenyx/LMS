@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -17,50 +17,43 @@ import {
   Divider,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 
-interface BorrowFormProps {
+interface BuyFormProps {
   open: boolean;
   onClose: () => void;
   bookName: string;
+  price: number;
 }
 
-interface BorrowFormData {
-  name: string;
-  email: string;
-  duration: string;
-  purpose: string;
-}
-
-export default function BorrowForm({ open, onClose, bookName }: BorrowFormProps) {
+export default function BuyForm({ open, onClose, bookName, price }: BuyFormProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const initialFormState = {
-    name: '',
-    email: '',
-    duration: '14',
-    purpose: 'Study'
+    quantity: 1,
+    shippingAddress: "",
+    paymentMethod: "credit_card",
   };
 
-  const [formData, setFormData] = useState<BorrowFormData>(initialFormState);
-
-  useEffect(() => {
-    if (open) {
-      const userString = localStorage.getItem("user");
-      const user = userString ? JSON.parse(userString) : null;
-      setFormData({
-        ...initialFormState,
-        name: user?.name || '',
-        email: user?.email || ''
-      });
-    }
-  }, [open]);
+  const [formData, setFormData] = useState(initialFormState);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Borrow request:', { ...formData, book: bookName });
+    const userString = localStorage.getItem("user");
+    const user = userString ? JSON.parse(userString) : null;
+    
+    console.log({ 
+      ...formData, 
+      book: bookName,
+      totalAmount: (price * formData.quantity).toFixed(2),
+      userName: user?.name,
+      userEmail: user?.email
+    });
+
+    // Reset form to initial state
     setFormData(initialFormState);
     onClose();
   };
@@ -91,10 +84,13 @@ export default function BorrowForm({ open, onClose, bookName }: BorrowFormProps)
         }
       }}
     >
-      <DialogTitle className="bg-blue-600 text-white py-3 flex items-center justify-between">
+      <DialogTitle 
+        className="bg-blue-600 text-white py-3 flex items-center justify-between"
+        sx={{ px: 3 }}
+      >
         <div className="flex items-center gap-2">
-          <LibraryBooksIcon />
-          <span className="text-xl font-semibold">Borrow Book</span>
+          <ShoppingCartIcon />
+          <span className="text-xl font-semibold">Purchase Book</span>
         </div>
         <IconButton
           edge="end"
@@ -108,79 +104,84 @@ export default function BorrowForm({ open, onClose, bookName }: BorrowFormProps)
 
       <form onSubmit={handleSubmit}>
         <DialogContent sx={{ px: 3, py: 2 }}>
-          {/* Book Details Section */}
+          {/* Order Summary Section */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <ReceiptIcon className="text-blue-600" />
-              <h3 className="text-lg font-semibold text-gray-800">Book Details</h3>
+              <h3 className="text-lg font-semibold text-gray-800">Order Summary</h3>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <div className="grid gap-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Selected Book:</span>
+                  <span className="text-gray-600">Book:</span>
                   <span className="font-medium text-gray-800 break-words max-w-[60%] text-right">{bookName}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Price per unit:</span>
+                  <span className="font-medium text-gray-800">${price.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Quantity:</span>
+                  <TextField
+                    size="small"
+                    name="quantity"
+                    type="number"
+                    value={formData.quantity}
+                    onChange={handleChange}
+                    variant="outlined"
+                    inputProps={{ 
+                      min: 1,
+                      style: { 
+                        width: '60px',
+                        textAlign: 'center',
+                        padding: '4px 8px'
+                      }
+                    }}
+                  />
                 </div>
                 <Divider className="my-2" />
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Borrow Duration:</span>
-                  <FormControl size="small" sx={{ width: '120px' }}>
-                    <Select
-                      name="duration"
-                      value={formData.duration}
-                      onChange={handleChange}
-                    >
-                      <MenuItem value="7">7 Days</MenuItem>
-                      <MenuItem value="14">14 Days</MenuItem>
-                      <MenuItem value="30">30 Days</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <span className="text-gray-600 font-medium">Total Amount:</span>
+                  <span className="text-lg font-semibold text-green-600">
+                    ${(price * formData.quantity).toFixed(2)}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Borrower Information */}
+          {/* Shipping & Payment Section */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <LibraryBooksIcon className="text-blue-600" />
-              <h3 className="text-lg font-semibold text-gray-800">Borrower Information</h3>
+              <LocalShippingIcon className="text-blue-600" />
+              <h3 className="text-lg font-semibold text-gray-800">Shipping & Payment</h3>
             </div>
             <div className="grid gap-3">
               <TextField
                 fullWidth
+                required
                 size="small"
-                label="Name"
-                name="name"
-                value={formData.name}
+                label="Shipping Address"
+                name="shippingAddress"
+                value={formData.shippingAddress}
+                onChange={handleChange}
                 variant="outlined"
-                InputProps={{
-                  readOnly: true,
-                }}
+                multiline
+                rows={2}
+                placeholder="Enter your complete shipping address"
               />
-              <TextField
-                fullWidth
-                size="small"
-                type="email"
-                label="Email"
-                name="email"
-                value={formData.email}
-                variant="outlined"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <FormControl fullWidth size="small">
-                <InputLabel>Purpose of Borrowing</InputLabel>
+              <FormControl fullWidth required size="small">
+                <InputLabel>Payment Method</InputLabel>
                 <Select
-                  name="purpose"
-                  value={formData.purpose}
+                  name="paymentMethod"
+                  value={formData.paymentMethod}
                   onChange={handleChange}
-                  label="Purpose of Borrowing"
+                  label="Payment Method"
                 >
-                  <MenuItem value="Study">Study</MenuItem>
-                  <MenuItem value="Research">Research</MenuItem>
-                  <MenuItem value="Leisure">Leisure Reading</MenuItem>
-                  <MenuItem value="Other">Other</MenuItem>
+                  <MenuItem value="credit_card">Credit Card</MenuItem>
+                  <MenuItem value="debit_card">Debit Card</MenuItem>
+                  <MenuItem value="paypal">PayPal</MenuItem>
+                  <MenuItem value="bank_transfer">Bank Transfer</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -215,7 +216,7 @@ export default function BorrowForm({ open, onClose, bookName }: BorrowFormProps)
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
             }}
           >
-            Confirm Borrow
+            Confirm Purchase
           </Button>
         </DialogActions>
       </form>

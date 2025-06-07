@@ -156,17 +156,20 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
-              {user ? (
-                <UserAvatar 
-                  name={user.name} 
-                  email={user.email}
-                  onSignOut={handleSignOut}
-                />
-              ) : (
-                <Link to={"/login"}>
-                  <Button className="button1">Login</Button>
-                </Link>
-              )}
+              <li className="flex justify-center">
+                {user ? (
+                  <UserAvatar 
+                    name={user.name} 
+                    email={user.email}
+                    onSignOut={handleSignOut}
+                    isMobile={true}
+                  />
+                ) : (
+                  <Link to={"/login"}>
+                    <Button className="button1">Login</Button>
+                  </Link>
+                )}
+              </li>
             </ul>
           </div>
         )}

@@ -5,9 +5,10 @@ interface UserAvatarProps {
   name: string;
   email: string;
   onSignOut: () => void;
+  isMobile?: boolean;
 }
 
-export default function UserAvatar({ name, email, onSignOut }: UserAvatarProps) {
+export default function UserAvatar({ name, email, onSignOut, isMobile = false }: UserAvatarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -43,16 +44,22 @@ export default function UserAvatar({ name, email, onSignOut }: UserAvatarProps) 
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className={`relative ${isMobile ? 'inline-flex justify-center' : ''}`} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+        className={`flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-colors ${
+          isMobile ? 'mx-auto' : ''
+        }`}
       >
         {getInitials(name)}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50">
+        <div className={`${
+          isMobile 
+            ? 'absolute left-1/2 -translate-x-1/2 w-48 mt-2' 
+            : 'absolute right-0 mt-2 w-48'
+        } bg-white rounded-lg shadow-lg py-1 z-50`}>
           <div className="px-4 py-2 border-b">
             <p className="text-sm font-medium text-gray-900">{name}</p>
             <p className="text-xs text-gray-500 truncate">{email}</p>

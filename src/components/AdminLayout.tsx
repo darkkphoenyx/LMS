@@ -98,12 +98,13 @@ export function AdminLayout() {
               <Navigation onNavigate={() => setSidebarOpen(false)} />
             </div>
           </div>
-          <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+          {/* Mobile sidebar logout button */}
+          <div className="flex-shrink-0 flex border-t border-gray-200 p-4 pl-8">
             <button
               onClick={handleLogout}
-              className="button5 flex text-white items-center gap-2 px-3 py-2"
+              className="flex items-center px-4 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm transition-colors duration-200"
             >
-              <LogOut className="h-5 w-5 mr-2" />
+              <LogOut className="h-4 w-4 mr-1.5" />
               <span>Logout</span>
             </button>
           </div>
@@ -129,12 +130,13 @@ export function AdminLayout() {
             <Navigation />
           </div>
         </div>
-        <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+        {/* Desktop sidebar logout button */}
+        <div className="flex-shrink-0 flex border-t border-gray-200 p-4 pl-8">
           <button
             onClick={handleLogout}
-            className="button5 flex text-white items-center gap-2 p-3"
+            className="flex items-center px-4 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm transition-colors duration-200"
           >
-            <LogOut className="h-5 w-5 mr-2" />
+            <LogOut className="h-4 w-4 mr-1.5" />
             <span>Logout</span>
           </button>
         </div>

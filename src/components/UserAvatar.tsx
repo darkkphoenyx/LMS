@@ -47,7 +47,7 @@ export default function UserAvatar({ name, email, onSignOut, isMobile = false }:
     <div className={`relative ${isMobile ? 'inline-flex justify-center' : ''}`} ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-colors ${
+        className={`flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-colors cursor-pointer ${
           isMobile ? 'mx-auto' : ''
         }`}
       >

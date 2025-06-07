@@ -150,19 +150,19 @@ export default function BookDetails() {
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:justify-start">
               <button
                 onClick={handleBorrowClick}
-                className="bg-black text-white w-full sm:w-32 px-4 py-2.5 rounded-lg hover:bg-gray-900 flex items-center justify-center gap-2 transition-colors"
+                className="bg-black text-white w-full sm:w-32 px-4 py-2.5 rounded-lg hover:bg-gray-900 flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <span>Borrow</span>
               </button>
               <button 
                 onClick={handleBuyClick}
-                className="bg-blue-600 text-white w-full sm:w-32 px-4 py-2.5 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 transition-colors"
+                className="bg-blue-600 text-white w-full sm:w-32 px-4 py-2.5 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <LocalMallIcon />
                 <span>Buy Now</span>
               </button>
               <button 
-                className="text-gray-400 hover:text-red-500 p-2.5 border border-gray-200 rounded-lg hover:border-red-200 transition-colors"
+                className="text-gray-400 hover:text-red-500 p-2.5 border border-gray-200 rounded-lg hover:border-red-200 transition-colors cursor-pointer"
               >
                 <FavoriteIcon />
               </button>

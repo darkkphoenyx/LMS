@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Button } from "../components/ui/button";
+import { usersData } from "../const/data/users-data";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -10,18 +11,36 @@ export function Login() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    // Simulate API call
+    // Find user in our users data
+    const user = usersData.find(
+      (u) => u.email === email && u.password === password
+    );
+
     setTimeout(() => {
-      if (email === "admin@bookworm.com" && password === "admin") {
-        // Store authentication state
+      if (user) {
+        // Store user info in localStorage
+        localStorage.setItem("user", JSON.stringify({
+          email: user.email,
+          role: user.role,
+          name: user.name
+        }));
         localStorage.setItem("isAuthenticated", "true");
-        navigate("/admin/dashboard");
+
+        // Redirect based on role and previous location
+        if (user.role === "ADMIN") {
+          navigate("/admin/dashboard");
+        } else {
+          // If there's a redirect path in state, use it, otherwise go to home
+          const redirectPath = location.state?.from || "/";
+          navigate(redirectPath);
+        }
       } else {
         setError("Invalid email or password");
       }
@@ -38,8 +57,13 @@ export function Login() {
             BookWorm Welcomes You!
           </h2>
           <p className="mt-2 text-xs md:text-sm text-gray-600">
-            Sign in to access your library dashboard
+            Sign in to access your library account
           </p>
+          {location.state?.message && (
+            <p className="mt-2 text-sm text-blue-600">
+              {location.state.message}
+            </p>
+          )}
         </div>
 
         {/* Login Form */}
@@ -135,6 +159,17 @@ export function Login() {
                   "Sign in"
                 )}
               </button>
+            </div>
+
+            {/* Demo Accounts Info */}
+            <div className="mt-4 text-sm text-gray-600">
+              <p className="font-medium mb-2">Demo Accounts:</p>
+              <div className="space-y-1 text-xs">
+                <p>Admin: admin@bookworm.com / admin</p>
+                <p>User: sarah@example.com / sarah123</p>
+                <p>User: john@example.com / john123</p>
+                <p>User: mike@example.com / mike123</p>
+              </div>
             </div>
           </form>
         </div>

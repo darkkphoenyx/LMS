@@ -1,13 +1,41 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Breadcrumbs, Typography } from "@mui/material";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Star } from "lucide-react";
 import { booksData } from "../../const/data/books-data";
+import { useState } from "react";
+import BorrowForm from "../../components/BorrowForm";
 
 export default function BookDetails() {
   const { name } = useParams();
+  const navigate = useNavigate();
   const book = booksData.find((item) => item.name === name);
+  const [borrowFormOpen, setBorrowFormOpen] = useState(false);
+
+  const userString = localStorage.getItem("user");
+  const user = userString ? JSON.parse(userString) : null;
+
+  const handleBorrowClick = () => {
+    if (!user) {
+      // Redirect to login if user is not authenticated
+      navigate("/login", { 
+        state: { 
+          from: `/book-details/${encodeURIComponent(name || "")}`,
+          message: "Please log in to borrow books" 
+        } 
+      });
+      return;
+    }
+
+    if (user.role === "ADMIN") {
+      // Optionally show a message that admins cannot borrow books
+      alert("Administrators cannot borrow books");
+      return;
+    }
+
+    setBorrowFormOpen(true);
+  };
 
   if (!book) {
     return (
@@ -89,7 +117,10 @@ export default function BookDetails() {
             Available Quantity: {book.availableQuantity}
           </p>
           <div className="flex space-x-4 mt-4">
-            <button className="bg-black text-white px-4 py-2 rounded hover:bg-gray-900 flex items-center space-x-2 cursor-pointer">
+            <button
+              onClick={handleBorrowClick}
+              className="bg-black text-white px-4 py-2 rounded hover:bg-gray-900 flex items-center space-x-2 cursor-pointer"
+            >
               <span>Borrow</span>
             </button>
             <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center space-x-2 cursor-pointer">
@@ -102,6 +133,15 @@ export default function BookDetails() {
           </div>
         </div>
       </div>
+
+      {/* Borrow Form - Only shown for authenticated users */}
+      {user && user.role === "USER" && (
+        <BorrowForm
+          open={borrowFormOpen}
+          onClose={() => setBorrowFormOpen(false)}
+          bookName={book.name}
+        />
+      )}
 
       {/* Related Books */}
       <div>

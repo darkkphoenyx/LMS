@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { booksData } from "../../const/data/books-data";
 
 import {
@@ -13,6 +13,7 @@ import {
 } from "../../components/ui/pagination";
 
 export default function BooksPage() {
+  const navigate = useNavigate();
   const [selectedGenre, setSelectedGenre] = useState("All book");
   const [visibleItems] = useState(4);
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,6 +52,11 @@ export default function BooksPage() {
     currentPage * visibleItems,
     (currentPage + 1) * visibleItems
   );
+
+  const handleBookClick = (e: React.MouseEvent<HTMLAnchorElement>, bookName: string) => {
+    e.preventDefault();
+    navigate(`/book-details/${encodeURIComponent(bookName)}`);
+  };
 
   return (
     <div className="py-4 px-4 md:px-0 max-w-7xl mx-auto min-h-[73vh] flex flex-col">
@@ -93,6 +99,7 @@ export default function BooksPage() {
               to={`/book-details/${encodeURIComponent(book.name)}`}
               key={index}
               className="text-sm text-blue-500"
+              onClick={(e) => handleBookClick(e, book.name)}
             >
               <div className="border rounded-lg p-4 h-full flex flex-col justify-between shadow hover:shadow-lg transition">
                 <img
@@ -107,10 +114,24 @@ export default function BooksPage() {
                   ${book.price.toFixed(2)}
                 </p>
                 <div className="flex gap-2 items-center mt-4">
-                  <button className="bg-black w-full text-white px-2 py-2 rounded hover:bg-gray-900">
+                  <button 
+                    className="bg-black w-full text-white px-2 py-2 rounded hover:bg-gray-900"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      navigate(`/book-details/${encodeURIComponent(book.name)}`);
+                    }}
+                  >
                     Borrow
                   </button>
-                  <button className="bg-blue-600 w-full flex items-center justify-center text-white px-2 py-2 rounded hover:bg-blue-700">
+                  <button 
+                    className="bg-blue-600 w-full flex items-center justify-center text-white px-2 py-2 rounded hover:bg-blue-700"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      // Handle add to cart
+                    }}
+                  >
                     Add to Cart
                   </button>
                 </div>

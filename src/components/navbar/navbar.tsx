@@ -5,13 +5,45 @@ import { ImCross } from "react-icons/im";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
+import UserAvatar from "../UserAvatar";
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Load user data on mount and when localStorage changes
+  useEffect(() => {
+    const loadUserData = () => {
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const userData = JSON.parse(userString);
+        setUser({
+          name: userData.name,
+          email: userData.email
+        });
+      } else {
+        setUser(null);
+      }
+    };
+
+    // Load initial data
+    loadUserData();
+
+    // Add event listener for storage changes
+    window.addEventListener('storage', loadUserData);
+
+    return () => {
+      window.removeEventListener('storage', loadUserData);
+    };
+  }, []);
+
+  const handleSignOut = () => {
+    setUser(null);
+  };
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -57,9 +89,17 @@ const Navbar = () => {
               <IoMdCart className="cursor-pointer" fontSize={30} />
             </div>
             <div className="flex items-center">
-              <Link to={"/login"}>
-                <Button className="button1">Login</Button>
-              </Link>
+              {user ? (
+                <UserAvatar 
+                  name={user.name} 
+                  email={user.email} 
+                  onSignOut={handleSignOut}
+                />
+              ) : (
+                <Link to={"/login"}>
+                  <Button className="button1">Login</Button>
+                </Link>
+              )}
             </div>
           </div>
           {!isMobile ? (
@@ -116,9 +156,17 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
-              <Link to={"/login"}>
-                <Button className="button1">Login</Button>
-              </Link>
+              {user ? (
+                <UserAvatar 
+                  name={user.name} 
+                  email={user.email}
+                  onSignOut={handleSignOut}
+                />
+              ) : (
+                <Link to={"/login"}>
+                  <Button className="button1">Login</Button>
+                </Link>
+              )}
             </ul>
           </div>
         )}

@@ -12,22 +12,24 @@ export const usersData: User[] = [
     role: "ADMIN",
     name: "Admin User"
   },
+  
   {
-    email: "john@example.com",
-    password: "john123",
+    email: "suman@example.com",
+    password: "user",
     role: "USER",
-    name: "John Doe"
+    name: "Suman Bisunkhe"
+  },
+  
+  {
+    email: "deepesh@example.com",
+    password: "user",
+    role: "USER",
+    name: "Deepesh Sunuwar"
   },
   {
-    email: "sarah@example.com",
-    password: "sarah123",
+    email: "rohan@example.com",
+    password: "user",
     role: "USER",
-    name: "Sarah Smith"
-  },
-  {
-    email: "mike@example.com",
-    password: "mike123",
-    role: "USER",
-    name: "Mike Johnson"
+    name: "Rohan Shrestha"
   }
 ]; 

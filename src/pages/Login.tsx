@@ -161,16 +161,7 @@ export function Login() {
               </button>
             </div>
 
-            {/* Demo Accounts Info */}
-            <div className="mt-4 text-sm text-gray-600">
-              <p className="font-medium mb-2">Demo Accounts:</p>
-              <div className="space-y-1 text-xs">
-                <p>Admin: admin@bookworm.com / admin</p>
-                <p>User: sarah@example.com / sarah123</p>
-                <p>User: john@example.com / john123</p>
-                <p>User: mike@example.com / mike123</p>
-              </div>
-            </div>
+          
           </form>
         </div>
         <div className="text-center">
